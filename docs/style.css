@@ -1,0 +1,344 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #0a0a1a;
+  color: #e0e0ff;
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+/* Hero */
+.hero {
+  position: relative;
+  text-align: center;
+  padding: 3rem 0 2.5rem;
+  overflow: hidden;
+}
+
+.hero-glow {
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 400px;
+  height: 200px;
+  background: radial-gradient(ellipse, rgba(120, 80, 255, 0.15), transparent 70%);
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.chain-badge {
+  display: inline-block;
+  padding: 0.35rem 1rem;
+  border-radius: 100px;
+  background: rgba(120, 80, 255, 0.12);
+  border: 1px solid rgba(120, 80, 255, 0.25);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #a080ff;
+  margin-bottom: 1rem;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #c0b0ff, #7850ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.subtitle {
+  margin-top: 0.5rem;
+  color: #8888bb;
+  font-size: 1rem;
+}
+
+/* Digest card */
+.digest-card {
+  background: linear-gradient(145deg, #111128, #0d0d20);
+  border: 1px solid #1a1a3a;
+  border-radius: 16px;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.digest-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #7850ff, transparent);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.card-header h2 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #d0d0ff;
+}
+
+.period-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 6px;
+  background: rgba(120, 80, 255, 0.1);
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #a080ff;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Loader */
+.loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem 0;
+  color: #8888bb;
+}
+
+.spinner {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 3px solid #1a1a3a;
+  border-top-color: #7850ff;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.hidden { display: none !important; }
+
+/* Metrics grid */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.metric {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid #1a1a3a;
+  border-radius: 12px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.metric-icon {
+  font-size: 1.1rem;
+}
+
+.metric-label {
+  font-size: 0.75rem;
+  color: #8888bb;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 500;
+}
+
+.metric-value {
+  font-size: 1.6rem;
+  font-weight: 800;
+  font-family: 'JetBrains Mono', monospace;
+  color: #f0f0ff;
+  line-height: 1.2;
+}
+
+/* Health row */
+.health-row {
+  display: flex;
+  gap: 1.5rem;
+  padding: 1rem 0;
+  margin-bottom: 1.5rem;
+  border-top: 1px solid #1a1a3a;
+  border-bottom: 1px solid #1a1a3a;
+  flex-wrap: wrap;
+}
+
+.health-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.health-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.health-dot.online { background: #40e080; box-shadow: 0 0 8px rgba(64, 224, 128, 0.4); }
+
+.health-label {
+  color: #8888bb;
+}
+
+.health-value {
+  color: #c0c0ff;
+  font-weight: 500;
+}
+
+/* Highlights */
+.highlights {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 0.5rem 0;
+}
+
+.highlight-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 0.8rem;
+  background: rgba(120, 80, 255, 0.04);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  border-left: 3px solid #7850ff;
+}
+
+/* Error */
+.error-message {
+  text-align: center;
+  padding: 2rem;
+  color: #ff6666;
+}
+
+.error-icon {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+/* Card footer */
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #1a1a3a;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.btn-refresh {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 1.2rem;
+  border-radius: 8px;
+  border: 1px solid #2a2a5a;
+  background: rgba(120, 80, 255, 0.08);
+  color: #c0b0ff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+
+.btn-refresh:hover {
+  background: rgba(120, 80, 255, 0.18);
+  border-color: #7850ff;
+  color: #e0d0ff;
+}
+
+.btn-refresh:active .refresh-icon {
+  animation: spin 0.4s ease-in-out;
+}
+
+.timestamp {
+  font-size: 0.78rem;
+  color: #6666aa;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* About section */
+.about {
+  margin-top: 2.5rem;
+  padding: 1.5rem;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid #1a1a3a;
+  border-radius: 12px;
+}
+
+.about h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: #c0c0ff;
+}
+
+.about p {
+  font-size: 0.85rem;
+  color: #8888bb;
+  line-height: 1.7;
+  margin-bottom: 0.4rem;
+}
+
+.about a {
+  color: #a080ff;
+  text-decoration: none;
+  border-bottom: 1px dotted rgba(120, 80, 255, 0.3);
+}
+
+.about a:hover {
+  color: #c0b0ff;
+  border-bottom-color: #7850ff;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 2rem 0 1rem;
+  color: #555588;
+  font-size: 0.8rem;
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+  h1 { font-size: 1.8rem; }
+  .metrics-grid { grid-template-columns: 1fr; }
+  .card-header { flex-direction: column; align-items: flex-start; }
+  .digest-card { padding: 1.25rem; }
+}
