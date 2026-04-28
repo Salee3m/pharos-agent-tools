@@ -1,0 +1,100 @@
+{
+  "spn_artifact": {
+    "spn_id": "e658e406b7726de7",
+    "profile": "rwa",
+    "generated_at": "2026-04-28T19:24:26.646961+00:00",
+    "spec_version": "1.0",
+    "config": {
+      "description": "RWA SPN for tokenized real-world assets with compliance",
+      "layer": "L1-Extension (SPN)",
+      "vm": {
+        "type": "EVM",
+        "engine": "Pharos Parallel EVM + ZK-KYC precompiles",
+        "gas_limit": 50000000,
+        "block_gas_target": 40000000,
+        "fee_model": "EIP-1559",
+        "base_fee_max": "50 gwei",
+        "precompiles": [
+          "ZKKYC_VERIFY (address: 0x100)",
+          "AML_CHECK (address: 0x101)",
+          "ASSET_PROVENANCE (address: 0x102)"
+        ]
+      },
+      "consensus": {
+        "engine": "AsyncBFT",
+        "block_time_seconds": 3,
+        "finality": "sub-second",
+        "validator_count": 13,
+        "validator_selection": "whitelisted + restaking-weighted",
+        "compliance": "onchain ZK-KYC before validator registration",
+        "slashing_conditions": [
+          "double-sign",
+          "downtime > 24h",
+          "compliance-violation"
+        ]
+      },
+      "identity": {
+        "kyc_required": true,
+        "kyc_provider": "Pharos ZK-KYC Module (integrated)",
+        "privacy": "zero-knowledge proofs only (no raw data onchain)",
+        "jurisdiction_filter": "configurable per asset class"
+      },
+      "cross_chain": {
+        "protocol": "Pharos Cross-SPN Interoperation Protocol",
+        "bridge_type": "light-client + ZK-relayer",
+        "transfer_restrictions": [
+          "KYC'd addresses only",
+          "daily limit per jurisdiction"
+        ]
+      },
+      "storage": {
+        "tree": "Delta-Encoded Multi-Version Merkle Tree",
+        "store": "Log-Structured Versioned Page Store",
+        "compliance_audit_trail": true,
+        "retention": "7 years (regulatory minimum)"
+      },
+      "staking": {
+        "native_restaking": true,
+        "min_stake": "500,000 PHR",
+        "reward_rate_apr": "6-10%",
+        "supported_assets": [
+          "PHR",
+          "USDC",
+          "stETH"
+        ]
+      },
+      "gas_token": "USDC (stable gas, configurable)",
+      "rpc_endpoints": {
+        "http": "http://spn-rwa.e658e406b7726de7.pharos.internal:8545",
+        "ws": "ws://spn-rwa.e658e406b7726de7.pharos.internal:8546"
+      },
+      "deploy_guide": {
+        "prerequisites": [
+          "Pharos L1-Core validator node",
+          "Restaked PHR + whitelist approval",
+          "KYC provider integration",
+          "Docker + docker-compose"
+        ],
+        "steps": [
+          "1. Submit whitelist request via Pharos governance",
+          "2. Clone SPN SDK and configure compliance module",
+          "3. Deploy: docker compose -f rwa-spn.yaml up -d",
+          "4. Register with ZK-KYC proof: pharos-spn register --kyc-proof proof.json",
+          "5. Verify: pharos-spn status --id <spn_id>"
+        ],
+        "estimated_time": "30 minutes + KYC approval (~24h)"
+      }
+    }
+  },
+  "validation": {
+    "issues": [],
+    "warnings": [],
+    "valid": true
+  },
+  "quick_start": {
+    "commands": [
+      "echo 'SPN e658e406b7726de7 (rwa) configured. Run: pharos-spn register --config spn-e658e406b7726de7.json'",
+      "# Save this output to spn-e658e406b7726de7.json"
+    ]
+  }
+}

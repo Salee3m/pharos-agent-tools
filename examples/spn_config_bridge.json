@@ -1,0 +1,77 @@
+{
+  "spn_artifact": {
+    "spn_id": "c3121c0a88e71ee6",
+    "profile": "cross-chain",
+    "generated_at": "2026-04-28T19:24:26.707485+00:00",
+    "spec_version": "1.0",
+    "config": {
+      "description": "Cross-chain bridge and message relay SPN",
+      "layer": "L1-Extension (SPN)",
+      "vm": {
+        "type": "WASM",
+        "engine": "Pharos WASM Runtime (lightweight, relay-optimized)",
+        "gas_limit": 5000000,
+        "native_primitives": [
+          "light_client_update",
+          "message_relay",
+          "header_sync",
+          "proof_verification (Merkle, ZK)"
+        ]
+      },
+      "consensus": {
+        "engine": "AsyncBFT",
+        "block_time_seconds": 1,
+        "validator_count": 9,
+        "validator_selection": "geographically distributed + restaking"
+      },
+      "bridges": {
+        "supported_chains": [
+          "Pharos L1",
+          "Ethereum",
+          "Solana",
+          "BNB Chain",
+          "Bitcoin (via Babylon)"
+        ],
+        "message_format": "Pharos Cross-Chain Message Protocol (PCMP)",
+        "finality_guarantee": "SPN finality + L1 inclusion proof",
+        "fee_model": "destination chain gas + relay fee (configurable)"
+      },
+      "cross_chain": {
+        "protocol": "Pharos Cross-SPN Interoperation Protocol",
+        "bridge_type": "SPN-native (no external bridge needed)"
+      },
+      "staking": {
+        "min_stake": "200,000 PHR",
+        "reward_rate_apr": "8-14%",
+        "relayer_bond": "100,000 PHR (slashable on invalid relay)"
+      },
+      "gas_token": "PHR (negligible, sub-cent per relay)",
+      "deploy_guide": {
+        "prerequisites": [
+          "Pharos L1 validator node",
+          "Light client infrastructure for target chains",
+          "Relayer key management (HSM recommended)"
+        ],
+        "steps": [
+          "1. Configure bridges in config/bridges.yaml (chain IDs + endpoints)",
+          "2. Generate relayer keys: pharos-spn keys generate --type relayer",
+          "3. docker compose -f bridge-spn.yaml up -d",
+          "4. Register bridge SPN: pharos-spn register --bridge-config bridges.yaml",
+          "5. Initiate test relay: pharos-spn relay --from pharos --to ethereum --data 0x..."
+        ],
+        "estimated_time": "20 minutes + light client sync time"
+      }
+    }
+  },
+  "validation": {
+    "issues": [],
+    "warnings": [],
+    "valid": true
+  },
+  "quick_start": {
+    "commands": [
+      "echo 'SPN c3121c0a88e71ee6 (cross-chain) configured. Run: pharos-spn register --config spn-c3121c0a88e71ee6.json'",
+      "# Save this output to spn-c3121c0a88e71ee6.json"
+    ]
+  }
+}

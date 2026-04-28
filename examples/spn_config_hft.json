@@ -1,0 +1,95 @@
+{
+  "spn_artifact": {
+    "spn_id": "4bf49a16fe558614",
+    "profile": "hft",
+    "generated_at": "2026-04-28T19:24:26.588161+00:00",
+    "spec_version": "1.0",
+    "config": {
+      "description": "High-Frequency Trading SPN - WASM, sub-ms latency",
+      "layer": "L1-Extension (SPN)",
+      "vm": {
+        "type": "WASM",
+        "engine": "Pharos WASM Runtime (Wasmtime-based)",
+        "gas_limit": 100000000,
+        "execution_model": "deterministic, single-threaded per order",
+        "fee_model": "flat per-tx (0.0001 PHR)",
+        "native_primitives": [
+          "order_matching",
+          "cross_chain_swap",
+          "price_feed_oracle"
+        ]
+      },
+      "consensus": {
+        "engine": "AsyncBFT (optimized for HFT)",
+        "block_time_seconds": 0.5,
+        "finality": "150ms",
+        "validator_count": 5,
+        "validator_selection": "low-latency whitelist (< 10ms to sequencer)",
+        "sequencer_mode": "centralized sequencing, decentralized validation"
+      },
+      "order_book": {
+        "engine": "Pharos Native Order Book (off-chain matching, on-chain settlement)",
+        "max_orders_per_block": 5000,
+        "settlement_delay": "1 block (~500ms)",
+        "supported_order_types": [
+          "limit",
+          "market",
+          "ioc",
+          "fok",
+          "twap"
+        ]
+      },
+      "cross_chain": {
+        "protocol": "Pharos Cross-SPN Interoperation Protocol",
+        "bridge_type": "light-client (optimized for < 1s finality)"
+      },
+      "storage": {
+        "tree": "Delta-Encoded Multi-Version Merkle Tree",
+        "store": "In-memory + LSM-tree checkpoint (nightly)",
+        "latency_target": "< 1ms reads"
+      },
+      "staking": {
+        "min_stake": "1,000,000 PHR",
+        "reward_rate_apr": "15-25%",
+        "supported_assets": [
+          "PHR"
+        ],
+        "sequencer_bond": "2,000,000 PHR (slashable)"
+      },
+      "gas_token": "PHR",
+      "rpc_endpoints": {
+        "http": "http://spn-hft.4bf49a16fe558614.pharos.internal:8545",
+        "ws": "ws://spn-hft.4bf49a16fe558614.pharos.internal:8546",
+        "grpc": "grpc://spn-hft.4bf49a16fe558614.pharos.internal:9090"
+      },
+      "deploy_guide": {
+        "prerequisites": [
+          "Dedicated bare-metal or cloud GPU instance",
+          "Sub-10ms network to Pharos L1 sequencer",
+          "Restaked minimum 1M PHR",
+          "Docker + low-latency kernel tuning"
+        ],
+        "steps": [
+          "1. Request HFT SPN license from Pharos governance",
+          "2. Provision hardware: 8+ vCPU, 32GB RAM, NVMe SSD",
+          "3. Clone SPN SDK: git clone -b hft https://github.com/PharosNetwork/spn-sdk",
+          "4. Tune kernel: ./scripts/tune-kernel.sh",
+          "5. docker compose -f hft-spn.yaml up -d --profile sequencer,validator",
+          "6. Register: pharos-spn register --profile hft --proof benchmark.json"
+        ],
+        "estimated_time": "1 hour + license approval"
+      }
+    }
+  },
+  "validation": {
+    "issues": [],
+    "warnings": [],
+    "valid": true
+  },
+  "quick_start": {
+    "commands": [
+      "echo 'SPN 4bf49a16fe558614 (hft) configured. Run: pharos-spn register --config spn-4bf49a16fe558614.json'",
+      "# Save this output to spn-4bf49a16fe558614.json"
+    ]
+  }
+}

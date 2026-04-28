@@ -1,0 +1,85 @@
+{
+  "spn_artifact": {
+    "spn_id": "ac0ba87b422bd06b",
+    "profile": "defi",
+    "generated_at": "2026-04-28T19:24:26.530577+00:00",
+    "spec_version": "1.0",
+    "config": {
+      "description": "DeFi SPN for AMM DEX, lending, and yield protocols",
+      "layer": "L1-Extension (SPN)",
+      "vm": {
+        "type": "EVM",
+        "engine": "Pharos Parallel EVM (speculative execution)",
+        "gas_limit": 30000000,
+        "block_gas_target": 25000000,
+        "fee_model": "EIP-1559 (base + priority)",
+        "base_fee_max": "100 gwei"
+      },
+      "consensus": {
+        "engine": "AsyncBFT (optimistic finality)",
+        "block_time_seconds": 2,
+        "finality": "sub-second",
+        "validator_count": 21,
+        "validator_selection": "restaking-weighted (PHR + Babylon stBTC)",
+        "slashing_conditions": [
+          "double-sign",
+          "downtime > 48h",
+          "equivocation"
+        ]
+      },
+      "cross_chain": {
+        "protocol": "Pharos Cross-SPN Interoperation Protocol",
+        "bridge_type": "light-client + relayer",
+        "finality_blocks": 1,
+        "message_passing": "atomic (same-slot dispatch)"
+      },
+      "storage": {
+        "tree": "Delta-Encoded Multi-Version Merkle Tree",
+        "store": "Log-Structured Versioned Page Store",
+        "pruning": "state expiry after 180 days"
+      },
+      "staking": {
+        "native_restaking": true,
+        "min_stake": "100,000 PHR",
+        "reward_rate_apr": "8-12%",
+        "supported_assets": [
+          "PHR",
+          "stBTC",
+          "stETH"
+        ],
+        "reward_distribution": "per-block + MEV share"
+      },
+      "gas_token": "PHR (burned per tx)",
+      "rpc_endpoints": {
+        "http": "http://spn-defi.ac0ba87b422bd06b.pharos.internal:8545",
+        "ws": "ws://spn-defi.ac0ba87b422bd06b.pharos.internal:8546"
+      },
+      "deploy_guide": {
+        "prerequisites": [
+          "Pharos L1-Core validator node",
+          "Restaked minimum PHR on L1",
+          "Docker + docker-compose v2.20+"
+        ],
+        "steps": [
+          "1. Clone Pharos SPN SDK: git clone https://github.com/PharosNetwork/spn-sdk",
+          "2. Edit config/spn.yaml with values from this profile",
+          "3. docker compose up -d (starts sequencer + validators)",
+          "4. Register SPN on L1: pharos-spn register --config spn.yaml",
+          "5. Verify: curl -X POST https://<spn_rpc> -d '{\"method\":\"eth_chainId\"}'"
+        ],
+        "estimated_time": "15 minutes (automated)"
+      }
+    }
+  },
+  "validation": {
+    "issues": [],
+    "warnings": [],
+    "valid": true
+  },
+  "quick_start": {
+    "commands": [
+      "echo 'SPN ac0ba87b422bd06b (defi) configured. Run: pharos-spn register --config spn-ac0ba87b422bd06b.json'",
+      "# Save this output to spn-ac0ba87b422bd06b.json"
+    ]
+  }
+}
