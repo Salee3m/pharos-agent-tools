@@ -2,120 +2,244 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Pharos Agent Tools — Dev|Isham</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pharos Agent — Live on Atlantic Testnet</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-  *{margin:0;padding:0;box-sizing:border-box}
-  body{font-family:Inter,sans-serif;background:#0a0a0f;color:#e4e4e7;line-height:1.6}
-  .container{max-width:900px;margin:0 auto;padding:2rem}
-  header{text-align:center;padding:4rem 1rem 2rem}
-  header h1{font-size:2.5rem;font-weight:800;background:linear-gradient(135deg,#6366f1,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-  header p{color:#a1a1aa;margin-top:.5rem;font-size:1.1rem}
-  .badge{display:inline-block;background:#18181b;border:1px solid #27272a;border-radius:999px;padding:.25rem .75rem;font-size:.8rem;color:#a1a1aa;margin-bottom:1rem}
-  .tool{background:#18181b;border:1px solid #27272a;border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;transition:border-color .2s}
-  .tool:hover{border-color:#6366f1}
-  .tool h2{font-size:1.3rem;font-weight:600;margin-bottom:.5rem;color:#f4f4f5}
-  .tool .tag{display:inline-block;background:#6366f1;color:#fff;font-size:.7rem;font-weight:600;padding:.15rem .5rem;border-radius:4px;margin-right:.4rem;text-transform:uppercase}
-  .tool p{color:#a1a1aa;margin-bottom:.8rem}
-  .tool pre{background:#0a0a0f;border:1px solid #27272a;border-radius:8px;padding:1rem;font-size:.85rem;overflow-x:auto;color:#e4e4e7}
-  .tool code{color:#06b6d4}
-  .contract-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin:.8rem 0}
-  .contract-card{background:#0a0a0f;border:1px solid #27272a;border-radius:8px;padding:.8rem;font-size:.85rem}
-  .contract-card .name{color:#06b6d4;font-weight:600}
-  .contract-card .desc{color:#a1a1aa;font-size:.8rem;margin-top:.2rem}
-  .cli-output{background:#0a0a0f;border:1px solid #27272a;border-radius:8px;padding:1rem;font-family:monospace;font-size:.8rem;line-height:1.4;color:#a1a1aa;margin:.8rem 0}
-  .cli-output .green{color:#22c55e}
-  .cli-output .blue{color:#06b6d4}
-  .cli-output .yellow{color:#eab308}
-  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:2rem 0;text-align:center}
-  .stat-number{font-size:2rem;font-weight:800;color:#f4f4f5}
-  .stat-label{color:#a1a1aa;font-size:.9rem}
-  footer{text-align:center;padding:2rem;color:#71717a;font-size:.9rem}
-  footer a{color:#6366f1;text-decoration:none}
-  @media(max-width:600px){.contract-grid,.stats{grid-template-columns:1fr}}
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background:#0a0a0f;
+    color:#e0e0e0;
+    font-family:'Inter',sans-serif;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+  }
+  .container { max-width:1100px; margin:0 auto; padding:24px; width:100%; flex:1; }
+  header {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 0; border-bottom:1px solid #1a1a2e; margin-bottom:32px;
+  }
+  .logo { display:flex; align-items:center; gap:12px; }
+  .logo h1 { font-size:20px; font-weight:800; background:linear-gradient(135deg,#6366f1,#06b6d4); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+  .logo span { color:#666; font-size:13px; }
+  .status-badge {
+    display:flex; align-items:center; gap:6px;
+    background:#0d1f1a; border:1px solid #1a3a2e;
+    padding:6px 14px; border-radius:20px; font-size:12px; font-weight:500;
+  }
+  .status-dot { width:8px; height:8px; border-radius:50%; background:#22c55e; animation:pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+  .grid {
+    display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:24px;
+  }
+  @media(max-width:768px){ .grid { grid-template-columns:1fr; } }
+  .card {
+    background:#111118; border:1px solid #1a1a2e; border-radius:12px; padding:20px;
+  }
+  .card h3 { font-size:13px; font-weight:500; color:#666; text-transform:uppercase; letter-spacing:.5px; margin-bottom:12px; }
+  .big-number { font-size:32px; font-weight:700; color:#fff; font-family:'JetBrains Mono',monospace; }
+  .big-number .label { font-size:14px; color:#666; font-weight:400; font-family:'Inter',sans-serif; }
+  .stat-row { display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid #1a1a2e; font-size:14px; }
+  .stat-row:last-child { border-bottom:none; }
+  .stat-label { color:#888; }
+  .stat-value { color:#fff; font-family:'JetBrains Mono',monospace; font-size:13px; }
+  .stat-value.green { color:#22c55e; }
+  .section-title { font-size:16px; font-weight:600; margin:24px 0 12px; color:#ccc; }
+  .tx-list { font-size:13px; }
+  .tx-item {
+    display:flex; justify-content:space-between; align-items:center;
+    padding:10px 0; border-bottom:1px solid #1a1a2e; gap:12px;
+  }
+  .tx-hash { font-family:'JetBrains Mono',monospace; color:#818cf8; font-size:12px; cursor:pointer; }
+  .tx-hash:hover { text-decoration:underline; }
+  .tx-to { color:#aaa; font-size:12px; max-width:160px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .tx-value { font-family:'JetBrains Mono',monospace; color:#22c55e; font-size:12px; }
+  .agent-section {
+    background:linear-gradient(135deg,#0f0f1a,#14142a);
+    border:1px solid #2a2a4e; border-radius:12px; padding:24px; margin-bottom:24px;
+  }
+  .agent-section h2 { font-size:18px; font-weight:600; margin-bottom:8px; color:#e0e0ff; }
+  .agent-section p { color:#888; font-size:14px; line-height:1.6; }
+  .agent-tools { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+  .tool-tag {
+    background:#1a1a3e; border:1px solid #2a2a5e;
+    padding:4px 12px; border-radius:6px; font-size:12px; color:#818cf8;
+  }
+  .footer { text-align:center; padding:24px; color:#444; font-size:13px; }
+  .footer a { color:#6366f1; text-decoration:none; }
+  .loading { color:#888; font-style:italic; font-size:14px; }
+  .error-state { color:#ef4444; font-size:13px; padding:16px; background:#1f0f0f; border:1px solid #3f1a1a; border-radius:8px; }
+  .time { font-size:12px; color:#555; text-align:right; margin-top:4px; }
 </style>
 </head>
 <body>
-<header>
-  <div class="badge">Pharos Network Ecosystem</div>
-  <h1>Pharos Agent Tools</h1>
-  <p>Production-grade infrastructure for building on Pharos — SPN configurators, RWA contracts, and cross-chain tooling by Dev|Isham</p>
-</header>
-
 <div class="container">
-
-<div class="stats">
-  <div><div class="stat-number">4</div><div class="stat-label">Solidity Contracts</div></div>
-  <div><div class="stat-number">6</div><div class="stat-label">SPN Profiles</div></div>
-  <div><div class="stat-number">9</div><div class="stat-label">Tests Passing</div></div>
-</div>
-
-<div class="tool">
-  <h2><span class="tag">CLI</span> Pharos SPN Configurator</h2>
-  <p>Generate deployable Special Processing Network configurations for 6 profiles — DeFi, RWA, HFT, zkML, Sidechain, and Cross-Chain Bridge. Validates against Pharos spec and includes step-by-step deploy guides.</p>
-  <div class="contract-grid">
-    <div class="contract-card"><div class="name">DeFi SPN</div><div class="desc">EVM, AMM/lending, sub-second finality</div></div>
-    <div class="contract-card"><div class="name">RWA SPN</div><div class="desc">ZK-KYC, compliance, tokenized assets</div></div>
-    <div class="contract-card"><div class="name">HFT SPN</div><div class="desc">WASM, order book, 150ms finality</div></div>
-    <div class="contract-card"><div class="name">zkML SPN</div><div class="desc">GPU prover, Groth16/PLONK/Nova</div></div>
-    <div class="contract-card"><div class="name">Sidechain SPN</div><div class="desc">Custom VM/gas/fee model</div></div>
-    <div class="contract-card"><div class="name">Bridge SPN</div><div class="desc">Light client, PCMP relay</div></div>
-  </div>
-  <pre>$ python3 pharos_spn_configurator.py defi -o my-spn.json
-<span class="green">✓ SPN config valid — ready for deployment</span>
-SPN ID: ac0ba87b422bd06b</pre>
-</div>
-
-<div class="tool">
-  <h2><span class="tag">Solidity</span> Pharos RWA Tokenization Toolkit</h2>
-  <p>Production-grade smart contracts for tokenizing Real-World Assets on Pharos. Permissioned transfers, ZK-KYC integration, proportional yield distribution, and cross-SPN bridge compatibility.</p>
-  <div class="contract-grid">
-    <div class="contract-card">
-      <div class="name">PharosAssetToken.sol</div>
-      <div class="desc">ERC-3643 permissioned token — KYC-gated, role-based mint/burn, pausable</div>
+  <header>
+    <div class="logo">
+      <div>
+        <h1>PHAROS AGENT</h1>
+        <span>First AI Agent on Pharos • Pacific Mainnet Launch Day</span>
+      </div>
     </div>
-    <div class="contract-card">
-      <div class="name">DistributionModule.sol</div>
-      <div class="desc">Proportional yield/income payouts per token holding, batch claiming</div>
+    <div class="status-badge">
+      <div class="status-dot"></div>
+      <span id="statusLabel">Connecting...</span>
     </div>
-    <div class="contract-card">
-      <div class="name">CrossChainAsset.sol</div>
-      <div class="desc">Lock/unlock bridge wrapper via Pharos Cross-Chain Message Protocol</div>
-    </div>
-    <div class="contract-card">
-      <div class="name">IComplianceModule.sol</div>
-      <div class="desc">ZK-KYC interface — verifyTransfer, registerIdentity, jurisdiction checks</div>
+  </header>
+
+  <!-- Agent Intro -->
+  <div class="agent-section">
+    <h2>🤖 First AI Agent on Pharos</h2>
+    <p>
+      This page is powered by an AI agent built with the official 
+      <strong style="color:#818cf8;">Pharos Agent Kit</strong> (npm: pharos-agent-kit). 
+      It monitors the <strong style="color:#22c55e;">Atlantic Testnet</strong> (Chain ID 688689) 
+      in real-time — fully autonomous, no human intervention. Deployer wallet: 
+      <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#818cf8;">0xeed4...7C63</span>.
+      Built on <strong style="color:#facc15;">Pacific Mainnet launch day</strong> — April 28, 2026.
+    </p>
+    <div class="agent-tools">
+      <span class="tool-tag">Pharos Agent Kit v1.0.2</span>
+      <span class="tool-tag">LangChain Tools</span>
+      <span class="tool-tag">viem / ethers</span>
+      <span class="tool-tag">Foundry</span>
+      <span class="tool-tag">TypeScript</span>
+      <span class="tool-tag">Python Monitor</span>
+      <span class="tool-tag">6h Cron Heartbeat</span>
     </div>
   </div>
-  <div class="cli-output">
-    <span class="green">[PASS]</span> test_InitialState() (gas: 31139)<br>
-    <span class="green">[PASS]</span> test_VerifyIdentity() (gas: 51341)<br>
-    <span class="green">[PASS]</span> test_TransferRequiresKYC() (gas: 86710)<br>
-    <span class="green">[PASS]</span> test_TransferRevertsIfUnverified() (gas: 16690)<br>
-    <span class="green">[PASS]</span> test_PauseAndUnpause() (gas: 70726)<br>
-    <span class="green">[PASS]</span> test_DepositAndDistribute() (gas: 132677)<br>
-    <span class="green">[PASS]</span> test_LockAndUnlock() (gas: 120714)<br>
-    <span class="blue">Suite result: ok. 7 passed; 0 failed</span>
+
+  <!-- Key Stats -->
+  <div class="grid">
+    <div class="card">
+      <h3>Latest Block</h3>
+      <div class="big-number" id="blockNumber">—</div>
+      <div class="time" id="blockTime"></div>
+    </div>
+    <div class="card">
+      <h3>Gas Price</h3>
+      <div class="big-number" id="gasPrice">— <span class="label">PHAROS</span></div>
+      <div class="time" id="gasTime"></div>
+    </div>
+    <div class="card">
+      <h3>Chain Status</h3>
+      <div id="chainInfo">
+        <div class="stat-row"><span class="stat-label">Chain ID</span><span class="stat-value">688689</span></div>
+        <div class="stat-row"><span class="stat-label">RPC</span><span class="stat-value" style="font-size:11px;">atlantic.dplabs-internal.com</span></div>
+        <div class="stat-row"><span class="stat-label">Explorer</span><span class="stat-value green">
+          <a href="https://atlantic.pharosscan.xyz" target="_blank" style="color:#818cf8;text-decoration:none;">atlantic.pharosscan.xyz ↗</a>
+        </span></div>
+        <div class="stat-row"><span class="stat-label">Wallet Balance</span><span class="stat-value" id="walletBalance">—</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Latest Block Details</h3>
+      <div id="blockDetails">
+        <div class="stat-row"><span class="stat-label">Hash</span><span class="stat-value" id="blockHash" style="font-size:11px;">—</span></div>
+        <div class="stat-row"><span class="stat-label">Transactions</span><span class="stat-value" id="blockTxCount">—</span></div>
+        <div class="stat-row"><span class="stat-label">Gas Used</span><span class="stat-value" id="blockGasUsed">—</span></div>
+        <div class="stat-row"><span class="stat-label">Timestamp</span><span class="stat-value" id="blockTimestamp">—</span></div>
+      </div>
+    </div>
   </div>
-  <pre>$ export DEPLOYER=&lt;private_key&gt;
-$ forge script script/Deploy.s.sol --rpc-url &lt;rpc&gt; --broadcast -vvv</pre>
+
+  <!-- Recent Transactions -->
+  <h3 class="section-title">📋 Latest Transactions</h3>
+  <div class="card" id="txContainer">
+    <div class="loading">Fetching latest transactions...</div>
+  </div>
+
+  <div class="footer">
+    Built by <a href="https://github.com/Salee3m" target="_blank">Dev|Isham</a> • 
+    <a href="https://github.com/Salee3m/pharos-agent-tools" target="_blank">GitHub</a> • 
+    Atlantic Testnet — Pharos Pacific Mainnet Launch Day
+  </div>
 </div>
 
-<div class="tool" style="text-align:center">
-  <h2>GitHub Repository</h2>
-  <p style="margin-bottom:0">
-    <a href="https://github.com/Salee3m/pharos-agent-tools" style="color:#6366f1;font-weight:600;text-decoration:none;font-size:1.2rem">
-      github.com/Salee3m/pharos-agent-tools →
-    </a>
-  </p>
-</div>
+<script>
+const RPC = 'https://atlantic.dplabs-internal.com';
+const EXPLORER = 'https://atlantic.pharosscan.xyz';
+const DEPLOYER = '0xeed479954373818098a6909729CB795ad88E7C63';
 
-</div>
+async function rpc(method, params = []) {
+  const res = await fetch(RPC, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ jsonrpc: '2.0', id: 1, method, params })
+  });
+  const data = await res.json();
+  if (data.error) throw new Error(data.error.message);
+  return data.result;
+}
 
-<footer>
-  Dev|Isham · Pharos Network Ecosystem · 2026
-</footer>
+function formatTime(ts) {
+  const d = new Date(parseInt(ts, 16) * 1000);
+  return d.toLocaleString();
+}
 
+function shortHash(h) {
+  return h ? h.slice(0,10) + '...' + h.slice(-6) : '—';
+}
+
+async function fetchData() {
+  try {
+    // Get latest block
+    const blockNum = await rpc('eth_blockNumber');
+    const num = parseInt(blockNum, 16);
+    document.getElementById('blockNumber').textContent = num.toLocaleString();
+    document.getElementById('statusLabel').textContent = 'Live — Block ' + num.toLocaleString();
+
+    // Get block details
+    const block = await rpc('eth_getBlockByNumber', [blockNum, true]);
+    document.getElementById('blockHash').textContent = shortHash(block.hash);
+    document.getElementById('blockTxCount').textContent = block.transactions.length;
+    document.getElementById('blockGasUsed').textContent = parseInt(block.gasUsed, 16).toLocaleString() + ' / ' + parseInt(block.gasLimit, 16).toLocaleString();
+    document.getElementById('blockTimestamp').textContent = formatTime(block.timestamp);
+    document.getElementById('blockTime').textContent = formatTime(block.timestamp);
+
+    // Get gas price
+    const gas = await rpc('eth_gasPrice');
+    const gasInPharos = parseInt(gas, 16) / 1e18;
+    document.getElementById('gasPrice').innerHTML = gasInPharos.toFixed(8) + ' <span class="label">PHAROS</span>';
+    document.getElementById('gasTime').textContent = 'Updated ' + new Date().toLocaleTimeString();
+
+    // Get wallet balance
+    const bal = await rpc('eth_getBalance', [DEPLOYER, 'latest']);
+    const balInPharos = parseInt(bal, 16) / 1e18;
+    document.getElementById('walletBalance').textContent = balInPharos.toFixed(6) + ' PHAROS';
+
+    // Transactions
+    const txContainer = document.getElementById('txContainer');
+    if (block.transactions.length === 0) {
+      txContainer.innerHTML = '<div style="color:#666;font-size:14px;">No transactions in latest block</div>';
+    } else {
+      let html = '<div class="tx-list">';
+      const txs = block.transactions.slice(0, 15);
+      txs.forEach(tx => {
+        const txHash = typeof tx === 'string' ? tx : tx.hash;
+        const to = typeof tx === 'object' ? (tx.to || 'Contract Creation') : '—';
+        const val = typeof tx === 'object' ? (parseInt(tx.value, 16) / 1e18).toFixed(6) : '—';
+        html += '<div class="tx-item">' +
+          '<span class="tx-hash" onclick="window.open(\'' + EXPLORER + '/tx/' + txHash + '\',\'_blank\')">' + shortHash(txHash) + '</span>' +
+          '<span class="tx-to">→ ' + (to.length > 20 ? to.slice(0,8)+'...'+to.slice(-4) : to) + '</span>' +
+          '<span class="tx-value">' + val + ' PHAROS</span>' +
+        '</div>';
+      });
+      html += '</div>';
+      txContainer.innerHTML = html;
+    }
+  } catch (err) {
+    document.getElementById('statusLabel').textContent = 'Error connecting';
+    document.getElementById('statusLabel').style.color = '#ef4444';
+    document.getElementById('blockNumber').textContent = '⚠';
+    document.getElementById('txContainer').innerHTML = '<div class="error-state">Connection error: ' + err.message + '</div>';
+    console.error(err);
+  }
+}
+
+fetchData();
+setInterval(fetchData, 15000);
+</script>
 </body>
 </html>
