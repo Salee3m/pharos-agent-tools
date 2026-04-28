@@ -1,0 +1,33 @@
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+
+# ──────────────────────────────────────────────────────
+# Pharos Pacific Mainnet & Atlantic Testnet
+# First AI Agent — live on Atlantic Testnet
+# ──────────────────────────────────────────────────────
+
+[rpc_endpoints]
+atlantic = "https://atlantic.dplabs-internal.com"
+pacific   = "${ETH_RPC_URL}"                               # set at deploy time
+
+# Atlantic Testnet — Chain ID 688689
+[chain_atlantic]
+chain_id = 688689
+rpc_url  = "https://atlantic.dplabs-internal.com"
+explorer = "https://atlantic.pharosscan.xyz"
+
+[etherscan]
+atlantic = { key = "${ETHERSCAN_API_KEY}", url = "https://atlantic.pharosscan.xyz" }
+
+# Atlantic Testnet deploy helper
+# Usage:
+#   forge script script/Deploy.s.sol --rpc-url atlantic --broadcast
+#   forge create src/MyContract.sol:MyContract --rpc-url atlantic --private-key $(cat ~/.pharos-testnet-key)
+
+[fmt]
+line_length = 100
+tab_width   = 4
+bracket_spacing = true
+int_types = "uint256"

@@ -1,0 +1,27 @@
+{
+  "name": "pharos-agent-demo",
+  "version": "1.0.0",
+  "description": "First AI Agent on Pharos Pacific Mainnet — integrated with Pharos Agent Kit, live on Atlantic Testnet, ready for mainnet launch day.",
+  "license": "Apache-2.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/agent.js",
+    "dev": "tsx src/agent.ts",
+    "check-chain": "tsx src/agent.ts --check-chain",
+    "balance": "tsx src/agent.ts --balance",
+    "monitor": "tsx src/agent.ts --monitor",
+    "full": "tsx src/agent.ts --full"
+  },
+  "dependencies": {
+    "pharos-agent-kit": "^1.0.2",
+    "viem": "^2.23.14",
+    "dotenv": "^16.4.7"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2",
+    "tsx": "^4.19.2",
+    "@types/node": "^22.10.2"
+  }
+}

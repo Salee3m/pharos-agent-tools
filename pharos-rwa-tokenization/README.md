@@ -1,6 +1,6 @@
 # Pharos RWA Tokenization Toolkit
 
-Production-grade Solidity contracts for tokenizing Real-World Assets on Pharos Network, by Isah Muhammad.
+Production-grade Solidity contracts for tokenizing Real-World Assets on Pharos Network, by Dev|Isham.
 
 ## Contracts
 

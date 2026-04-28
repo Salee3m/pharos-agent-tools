@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pharos Agent Tools — Dev|Isham</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:Inter,sans-serif;background:#0a0a0f;color:#e4e4e7;line-height:1.6}
+  .container{max-width:900px;margin:0 auto;padding:2rem}
+  header{text-align:center;padding:4rem 1rem 2rem}
+  header h1{font-size:2.5rem;font-weight:800;background:linear-gradient(135deg,#6366f1,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  header p{color:#a1a1aa;margin-top:.5rem;font-size:1.1rem}
+  .badge{display:inline-block;background:#18181b;border:1px solid #27272a;border-radius:999px;padding:.25rem .75rem;font-size:.8rem;color:#a1a1aa;margin-bottom:1rem}
+  .tool{background:#18181b;border:1px solid #27272a;border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;transition:border-color .2s}
+  .tool:hover{border-color:#6366f1}
+  .tool h2{font-size:1.3rem;font-weight:600;margin-bottom:.5rem;color:#f4f4f5}
+  .tool .tag{display:inline-block;background:#6366f1;color:#fff;font-size:.7rem;font-weight:600;padding:.15rem .5rem;border-radius:4px;margin-right:.4rem;text-transform:uppercase}
+  .tool p{color:#a1a1aa;margin-bottom:.8rem}
+  .tool pre{background:#0a0a0f;border:1px solid #27272a;border-radius:8px;padding:1rem;font-size:.85rem;overflow-x:auto;color:#e4e4e7}
+  .tool code{color:#06b6d4}
+  .contract-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin:.8rem 0}
+  .contract-card{background:#0a0a0f;border:1px solid #27272a;border-radius:8px;padding:.8rem;font-size:.85rem}
+  .contract-card .name{color:#06b6d4;font-weight:600}
+  .contract-card .desc{color:#a1a1aa;font-size:.8rem;margin-top:.2rem}
+  .cli-output{background:#0a0a0f;border:1px solid #27272a;border-radius:8px;padding:1rem;font-family:monospace;font-size:.8rem;line-height:1.4;color:#a1a1aa;margin:.8rem 0}
+  .cli-output .green{color:#22c55e}
+  .cli-output .blue{color:#06b6d4}
+  .cli-output .yellow{color:#eab308}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:2rem 0;text-align:center}
+  .stat-number{font-size:2rem;font-weight:800;color:#f4f4f5}
+  .stat-label{color:#a1a1aa;font-size:.9rem}
+  footer{text-align:center;padding:2rem;color:#71717a;font-size:.9rem}
+  footer a{color:#6366f1;text-decoration:none}
+  @media(max-width:600px){.contract-grid,.stats{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <div class="badge">Pharos Network Ecosystem</div>
+  <h1>Pharos Agent Tools</h1>
+  <p>Production-grade infrastructure for building on Pharos — SPN configurators, RWA contracts, and cross-chain tooling by Dev|Isham</p>
+</header>
+
+<div class="container">
+
+<div class="stats">
+  <div><div class="stat-number">4</div><div class="stat-label">Solidity Contracts</div></div>
+  <div><div class="stat-number">6</div><div class="stat-label">SPN Profiles</div></div>
+  <div><div class="stat-number">9</div><div class="stat-label">Tests Passing</div></div>
+</div>
+
+<div class="tool">
+  <h2><span class="tag">CLI</span> Pharos SPN Configurator</h2>
+  <p>Generate deployable Special Processing Network configurations for 6 profiles — DeFi, RWA, HFT, zkML, Sidechain, and Cross-Chain Bridge. Validates against Pharos spec and includes step-by-step deploy guides.</p>
+  <div class="contract-grid">
+    <div class="contract-card"><div class="name">DeFi SPN</div><div class="desc">EVM, AMM/lending, sub-second finality</div></div>
+    <div class="contract-card"><div class="name">RWA SPN</div><div class="desc">ZK-KYC, compliance, tokenized assets</div></div>
+    <div class="contract-card"><div class="name">HFT SPN</div><div class="desc">WASM, order book, 150ms finality</div></div>
+    <div class="contract-card"><div class="name">zkML SPN</div><div class="desc">GPU prover, Groth16/PLONK/Nova</div></div>
+    <div class="contract-card"><div class="name">Sidechain SPN</div><div class="desc">Custom VM/gas/fee model</div></div>
+    <div class="contract-card"><div class="name">Bridge SPN</div><div class="desc">Light client, PCMP relay</div></div>
+  </div>
+  <pre>$ python3 pharos_spn_configurator.py defi -o my-spn.json
+<span class="green">✓ SPN config valid — ready for deployment</span>
+SPN ID: ac0ba87b422bd06b</pre>
+</div>
+
+<div class="tool">
+  <h2><span class="tag">Solidity</span> Pharos RWA Tokenization Toolkit</h2>
+  <p>Production-grade smart contracts for tokenizing Real-World Assets on Pharos. Permissioned transfers, ZK-KYC integration, proportional yield distribution, and cross-SPN bridge compatibility.</p>
+  <div class="contract-grid">
+    <div class="contract-card">
+      <div class="name">PharosAssetToken.sol</div>
+      <div class="desc">ERC-3643 permissioned token — KYC-gated, role-based mint/burn, pausable</div>
+    </div>
+    <div class="contract-card">
+      <div class="name">DistributionModule.sol</div>
+      <div class="desc">Proportional yield/income payouts per token holding, batch claiming</div>
+    </div>
+    <div class="contract-card">
+      <div class="name">CrossChainAsset.sol</div>
+      <div class="desc">Lock/unlock bridge wrapper via Pharos Cross-Chain Message Protocol</div>
+    </div>
+    <div class="contract-card">
+      <div class="name">IComplianceModule.sol</div>
+      <div class="desc">ZK-KYC interface — verifyTransfer, registerIdentity, jurisdiction checks</div>
+    </div>
+  </div>
+  <div class="cli-output">
+    <span class="green">[PASS]</span> test_InitialState() (gas: 31139)<br>
+    <span class="green">[PASS]</span> test_VerifyIdentity() (gas: 51341)<br>
+    <span class="green">[PASS]</span> test_TransferRequiresKYC() (gas: 86710)<br>
+    <span class="green">[PASS]</span> test_TransferRevertsIfUnverified() (gas: 16690)<br>
+    <span class="green">[PASS]</span> test_PauseAndUnpause() (gas: 70726)<br>
+    <span class="green">[PASS]</span> test_DepositAndDistribute() (gas: 132677)<br>
+    <span class="green">[PASS]</span> test_LockAndUnlock() (gas: 120714)<br>
+    <span class="blue">Suite result: ok. 7 passed; 0 failed</span>
+  </div>
+  <pre>$ export DEPLOYER=&lt;private_key&gt;
+$ forge script script/Deploy.s.sol --rpc-url &lt;rpc&gt; --broadcast -vvv</pre>
+</div>
+
+<div class="tool" style="text-align:center">
+  <h2>GitHub Repository</h2>
+  <p style="margin-bottom:0">
+    <a href="https://github.com/Salee3m/pharos-agent-tools" style="color:#6366f1;font-weight:600;text-decoration:none;font-size:1.2rem">
+      github.com/Salee3m/pharos-agent-tools →
+    </a>
+  </p>
+</div>
+
+</div>
+
+<footer>
+  Dev|Isham · Pharos Network Ecosystem · 2026
+</footer>
+
+</body>
+</html>
