@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Terminal, Shield, Network, Server } from "lucide-react";
+import { Terminal, Shield, Network, Server, Globe } from "lucide-react";
 
 export function About() {
   return (
@@ -26,7 +26,10 @@ export function About() {
             className="lg:col-span-7 space-y-8 text-lg text-muted-foreground leading-relaxed"
           >
             <p className="text-xl text-foreground font-medium">
-              My work operates at the intersection of AI, networking, and system-level engineering. I focus on building infrastructure that thinks—AI agents and automation pipelines with a defensive security mindset.
+              My work operates at the intersection of AI, web development, networking, and system-level engineering. I build everything from responsive web applications to autonomous AI agents — always with a focus on shipping real, deployable products.
+            </p>
+            <p>
+              On the frontend, I work with <strong className="text-foreground font-mono font-medium bg-muted px-1.5 py-0.5 rounded-sm">React</strong>, <strong className="text-foreground font-mono font-medium bg-muted px-1.5 py-0.5 rounded-sm">TypeScript</strong>, <strong className="text-foreground font-mono font-medium bg-muted px-1.5 py-0.5 rounded-sm">Tailwind CSS</strong>, and <strong className="text-foreground font-mono font-medium bg-muted px-1.5 py-0.5 rounded-sm">shadcn/ui</strong> to build polished, responsive sites deployed on Netlify with custom domains and SSL.
             </p>
             <p>
               I have extensive experience deploying <strong className="text-foreground font-mono font-medium bg-muted px-1.5 py-0.5 rounded-sm">Hermes agents</strong> and configuring <strong className="text-foreground font-mono font-medium bg-muted px-1.5 py-0.5 rounded-sm">OpenClaw environments</strong> to bridge local systems with intelligent orchestration.
@@ -49,6 +52,7 @@ export function About() {
               <h3 className="font-mono text-sm text-muted-foreground mb-6 pb-4 border-b uppercase tracking-wider">System.Specs</h3>
               <ul className="space-y-6">
                 {[
+                  { icon: Globe, title: "Web Development", desc: "React, TypeScript, Tailwind, shadcn/ui" },
                   { icon: Network, title: "2+ Years Networking", desc: "TCP/IP, Routing & Troubleshooting" },
                   { icon: Terminal, title: "CLI-First Mindset", desc: "Linux & headless server management" },
                   { icon: Shield, title: "Defensive Security", desc: "Resilient systems & secure automation" },

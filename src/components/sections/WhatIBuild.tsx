@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Cpu, Zap, Activity, Command } from "lucide-react";
+import { Cpu, Zap, Activity, Command, Globe } from "lucide-react";
 import { Card } from "@/components/ui/card";
 
 const areas = [
@@ -10,22 +10,28 @@ const areas = [
     id: "MOD_01"
   },
   {
+    icon: Globe,
+    title: "Web Applications",
+    description: "Building responsive, accessible websites and web apps with modern frontend stacks — React, TypeScript, Tailwind CSS, and shadcn/ui. Deployed on Netlify with custom domains and SSL.",
+    id: "MOD_02"
+  },
+  {
     icon: Zap,
     title: "Automation Pipelines",
     description: "End-to-end workflows that connect disparate APIs, cloud services, and local scripts into seamless, automated operations.",
-    id: "MOD_02"
+    id: "MOD_03"
   },
   {
     icon: Activity,
     title: "Network-Aware Systems",
     description: "Monitoring, diagnostic, and automation tools built with deep network protocol understanding for robust infrastructure management.",
-    id: "MOD_03"
+    id: "MOD_04"
   },
   {
     icon: Command,
     title: "CLI-Driven Tools",
     description: "Fast, efficient command-line applications for developers and sysadmins to manage environments without leaving the terminal.",
-    id: "MOD_04"
+    id: "MOD_05"
   }
 ];
 
