@@ -13,11 +13,16 @@ const skillCategories = [
   },
   {
     id: "SYS_03",
+    title: "Web Development",
+    skills: ["React", "Vite", "TypeScript", "Tailwind CSS", "shadcn/ui", "REST APIs", "Netlify", "Responsive Design"]
+  },
+  {
+    id: "SYS_04",
     title: "Tools & Environments",
     skills: ["Hermes", "OpenClaw", "Linux", "Git", "Cloud VMs"]
   },
   {
-    id: "SYS_04",
+    id: "SYS_05",
     title: "Programming & Systems",
     skills: ["Python", "Bash Scripting", "CLI Usage", "Remote Server Management", "REST APIs"]
   }

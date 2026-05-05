@@ -1,11 +1,18 @@
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
-import { ExternalLink, GitBranch, Star, GitFork } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
-import { fetchRepos, GitHubRepo } from "@/lib/github";
+import { ExternalLink, GitBranch } from "lucide-react";
 
 const featuredProjects = [
+  {
+    title: "Sirleeem.xyz — Portfolio Site",
+    description:
+      "Personal portfolio and project showcase built with React + Vite + shadcn/ui. Features dark-themed terminal aesthetic, live project cards, animated terminal window, and section-based layout.",
+    problem:
+      "Needed a professional landing page to showcase AI agent, Web3, and automation projects. Built a responsive single-page app with a dev/terminal theme that reflects the builder's identity.",
+    stack: ["React", "Vite", "shadcn/ui", "TypeScript", "Framer Motion", "Netlify", "Tailwind"],
+    link: "https://sirleeem.xyz",
+  },
   {
     title: "PharosGuard — Wallet Risk Analysis",
     description:
@@ -48,21 +55,9 @@ const featuredProjects = [
 ];
 
 export function Projects() {
-  const { data: repos, isLoading } = useQuery({
-    queryKey: ["github-repos"],
-    queryFn: fetchRepos,
-    staleTime: 1000 * 60 * 30, // 30 min cache
-  });
-
-  const topRepos = repos
-    ?.filter((r) => !r.fork)
-    .sort((a, b) => b.stargazers_count - a.stargazers_count)
-    .slice(0, 4);
-
   return (
     <section id="projects" className="py-24 bg-secondary/30 border-t">
       <div className="container mx-auto px-4 max-w-5xl">
-        {/* Featured Projects */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -74,7 +69,7 @@ export function Projects() {
           <div className="h-1 w-20 bg-accent rounded-full" />
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-6 mb-20">
+        <div className="grid md:grid-cols-2 gap-6">
           {featuredProjects.map((project, i) => (
             <motion.div
               key={i}
@@ -90,7 +85,12 @@ export function Projects() {
                     {project.title}
                   </h3>
                   {project.link !== "#" && (
-                    <a href={project.link} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
+                    <a
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-muted-foreground hover:text-foreground transition-colors"
+                    >
                       <ExternalLink className="w-5 h-5" />
                     </a>
                   )}
@@ -120,83 +120,6 @@ export function Projects() {
                       {tech}
                     </Badge>
                   ))}
-                </div>
-              </Card>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Live GitHub Repos */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="mb-12"
-        >
-          <h2 className="text-3xl font-bold mb-2">GitHub / Repos</h2>
-          <div className="h-1 w-20 bg-accent rounded-full" />
-          <p className="text-muted-foreground mt-4 text-sm">
-            Live from{" "}
-            <a
-              href="https://github.com/Salee3m"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-accent hover:underline"
-            >
-              github.com/Salee3m
-            </a>
-          </p>
-        </motion.div>
-
-        {isLoading && (
-          <div className="grid md:grid-cols-2 gap-6">
-            {[1, 2, 3, 4].map((i) => (
-              <Card key={i} className="p-6 h-40 animate-pulse bg-muted/20" />
-            ))}
-          </div>
-        )}
-
-        <div className="grid md:grid-cols-2 gap-6">
-          {topRepos?.map((repo, i) => (
-            <motion.div
-              key={repo.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.1 }}
-            >
-              <Card className="p-5 h-full flex flex-col border-border/50 hover:border-accent/40 transition-colors">
-                <div className="flex justify-between items-start mb-3">
-                  <h3 className="text-base font-bold font-mono truncate flex items-center gap-2">
-                    <GitBranch className="w-4 h-4 text-accent flex-shrink-0" />
-                    {repo.name}
-                  </h3>
-                  <div className="flex items-center gap-3 text-xs text-muted-foreground flex-shrink-0 ml-2">
-                    <span className="flex items-center gap-1">
-                      <Star className="w-3 h-3" /> {repo.stargazers_count}
-                    </span>
-                  </div>
-                </div>
-
-                <p className="text-sm text-muted-foreground flex-grow mb-3 line-clamp-2">
-                  {repo.description || "No description"}
-                </p>
-
-                <div className="flex items-center gap-3 mt-auto pt-3 border-t border-border/50">
-                  {repo.language && (
-                    <Badge variant="outline" className="font-mono text-[10px]">
-                      {repo.language}
-                    </Badge>
-                  )}
-                  <a
-                    href={repo.html_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs text-muted-foreground hover:text-accent ml-auto"
-                  >
-                    <ExternalLink className="w-3 h-3 inline" /> View
-                  </a>
                 </div>
               </Card>
             </motion.div>
