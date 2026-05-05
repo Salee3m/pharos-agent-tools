@@ -3,18 +3,18 @@ import { TerminalSquare } from "lucide-react";
 
 const experiences = [
   {
-    role: "Web Developer",
-    company: "Freelance / Independent",
-    period: "2018 - Present",
-    description: "Building responsive websites and web applications using modern frontend technologies. From semantic HTML and CSS to full React + TypeScript apps with Tailwind CSS and shadcn/ui. Deploying on Netlify with custom domains, SSL, and DNS configuration.",
-    tags: ["HTML", "CSS", "JavaScript", "React", "TypeScript", "Tailwind", "Netlify"]
-  },
-  {
     role: "Automation Architect",
     company: "Freelance / Independent",
     period: "2025 - Present",
     description: "Designing and deploying autonomous AI agent systems and infrastructure automation pipelines for technical clients.",
     tags: ["AI Agents", "Pipelines", "Infrastructure"]
+  },
+  {
+    role: "Web Developer",
+    company: "Freelance / Independent",
+    period: "2018 - Present",
+    description: "Building responsive websites and web applications using modern frontend technologies. From semantic HTML and CSS to full React + TypeScript apps with Tailwind CSS and shadcn/ui. Deploying on Netlify with custom domains, SSL, and DNS configuration.",
+    tags: ["HTML", "CSS", "JavaScript", "React", "TypeScript", "Tailwind", "Netlify"]
   },
   {
     role: "Network & Systems Engineer",

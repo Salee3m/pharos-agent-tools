@@ -39,7 +39,7 @@ export function Hero() {
           >
             <div className="w-1 bg-foreground rounded-full" />
             <h2 className="text-xl md:text-2xl text-muted-foreground font-mono font-medium py-1">
-              AI Engineer <br className="hidden md:block" /> Automation Architect <br className="hidden md:block" /> Network Engineer
+              AI Engineer <br className="hidden md:block" /> Web Developer <br className="hidden md:block" /> Automation Architect <br className="hidden md:block" /> Network Engineer
             </h2>
           </motion.div>
 
@@ -49,7 +49,7 @@ export function Hero() {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="text-lg md:text-xl max-w-xl mb-12 text-muted-foreground leading-relaxed"
           >
-            I build intelligent systems that automate workflows, deploy across environments, and interact with real-world systems.
+            I design and build across the full stack — from responsive websites with HTML, CSS, and React to autonomous AI agents and network infrastructure. I ship real products that solve real problems.
           </motion.p>
 
           <motion.div
