@@ -5,31 +5,32 @@ import { ExternalLink, GitBranch } from "lucide-react";
 
 const projects = [
   {
+    title: "AgentHansa Autonomous Earning Agent",
+    description: "A fully autonomous AI agent deployed on the AgentHansa marketplace (21K+ agents) that earns real USDC 24/7 — running cron-driven daily quests, catching red packets every 3 hours, and submitting alliance-war quests without human intervention.",
+    problem: "Earning on a competitive AI agent marketplace required constant manual effort. Built an autonomous system that handles the full loop — checkins, quests, red packets, and submissions — running entirely on cron with AI-powered decision making.",
+    stats: "Elite tier · 359 reputation · $12.77 earned · 32 red packets · 7 quests completed",
+    stack: ["Hermes AI", "Claude Code", "AgentHansa API", "Cron", "FluxA Wallet", "USDC"],
+    link: "#"
+  },
+  {
+    title: "Pharos RWA Farm Tokenizer",
+    description: "A Real World Asset tokenizer deployed on Pharos Pacific Mainnet that converts farm produce into blockchain tokens — enabling transparent trade, fractional ownership, and DeFi liquidity for agricultural assets.",
+    problem: "Smallholder farmers in Nigeria lack access to capital markets. Tokenizing farm produce as RWAs unlocks liquidity, enables fractional investment, and creates transparent supply chain tracking.",
+    stack: ["Solidity", "React", "Vite", "MetaMask", "Pharos Mainnet", "Ether.js"],
+    link: "https://pharos-rwa.netlify.app"
+  },
+  {
     title: "Hermes Agent Orchestrator",
-    description: "An autonomous AI agent system utilizing Hermes models for end-to-end task automation and orchestration across distributed environments.",
-    problem: "Manual intervention required for complex multi-step deployment tasks.",
-    stack: ["Python", "Hermes API", "LangChain", "Linux"],
+    description: "A multi-agent orchestration system that delegates tasks across specialist AI profiles (research, writing, engineering) — coordinating autonomous workflows through structured handoff protocols.",
+    problem: "Complex multi-step tasks require different skill sets. Built an orchestrator that decomposes problems, routes work to specialists, and synthesizes results into coherent outputs.",
+    stack: ["Python", "Hermes API", "Multi-Agent", "Linux", "Cron"],
     link: "#"
   },
   {
-    title: "OpenClaw Bridge",
-    description: "A secure integration layer bridging cloud AI execution environments with local hardware, enabling secure remote command execution.",
-    problem: "Lack of secure, seamless communication between cloud AI agents and local subnets.",
-    stack: ["Python", "OpenClaw", "WebSockets", "Docker"],
-    link: "#"
-  },
-  {
-    title: "NetMonitor Daemon",
-    description: "A network-aware automation tool that actively monitors subnet health, triggering remediation scripts upon detecting anomalies.",
-    problem: "Reactive network troubleshooting causing prolonged downtime.",
-    stack: ["Bash", "Python", "TCP/IP", "Cron"],
-    link: "#"
-  },
-  {
-    title: "API Sync Pipeline",
-    description: "A resilient API-based automation system that synchronizes state across multiple enterprise SaaS platforms securely.",
-    problem: "Data silos and state drift across enterprise tools.",
-    stack: ["Python", "REST APIs", "OAuth2", "Systemd"],
+    title: "kasauwa.ng — Nigerian Marketplace",
+    description: "A local marketplace platform for Nigerian communities to buy, sell, and trade using USDC/crypto payments — designed for mobile-first users with OTP authentication and local language support.",
+    problem: "Existing marketplaces lack crypto payment integration and don't cater to Nigerian users' specific needs for trust, local payments, and mobile-first experience.",
+    stack: ["React", "Node.js", "USDC", "Crypto", "MongoDB", "REST API"],
     link: "#"
   }
 ];
@@ -73,6 +74,13 @@ export function Projects() {
                   {project.description}
                 </p>
                 
+                {project.stats && (
+                  <div className="mb-3">
+                    <span className="text-xs font-mono text-accent bg-accent/10 px-2 py-1 rounded inline-block">
+                      {project.stats}
+                    </span>
+                  </div>
+                )}
                 <div className="mb-6 space-y-2">
                   <span className="text-sm font-medium text-foreground block">Problem Solved:</span>
                   <p className="text-sm text-muted-foreground border-l-2 border-muted pl-3 py-1">
