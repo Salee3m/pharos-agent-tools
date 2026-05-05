@@ -13,24 +13,10 @@ const projects = [
     link: "#"
   },
   {
-    title: "Pharos RWA Farm Tokenizer",
-    description: "A Real World Asset tokenizer deployed on Pharos Pacific Mainnet that converts farm produce into blockchain tokens — enabling transparent trade, fractional ownership, and DeFi liquidity for agricultural assets.",
-    problem: "Smallholder farmers in Nigeria lack access to capital markets. Tokenizing farm produce as RWAs unlocks liquidity, enables fractional investment, and creates transparent supply chain tracking.",
-    stack: ["Solidity", "React", "Vite", "MetaMask", "Pharos Mainnet", "Ether.js"],
-    link: "https://pharos-rwa.netlify.app"
-  },
-  {
     title: "Hermes Agent Orchestrator",
     description: "A multi-agent orchestration system that delegates tasks across specialist AI profiles (research, writing, engineering) — coordinating autonomous workflows through structured handoff protocols.",
     problem: "Complex multi-step tasks require different skill sets. Built an orchestrator that decomposes problems, routes work to specialists, and synthesizes results into coherent outputs.",
     stack: ["Python", "Hermes API", "Multi-Agent", "Linux", "Cron"],
-    link: "#"
-  },
-  {
-    title: "kasauwa.ng — Nigerian Marketplace",
-    description: "A local marketplace platform for Nigerian communities to buy, sell, and trade using USDC/crypto payments — designed for mobile-first users with OTP authentication and local language support.",
-    problem: "Existing marketplaces lack crypto payment integration and don't cater to Nigerian users' specific needs for trust, local payments, and mobile-first experience.",
-    stack: ["React", "Node.js", "USDC", "Crypto", "MongoDB", "REST API"],
     link: "#"
   }
 ];
