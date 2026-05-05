@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PharosGuard — Wallet Risk Analysis</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <span class="logo-icon">&#x1F6E1;</span>
+                <h1>PharosGuard</h1>
+            </div>
+            <p class="subtitle">Wallet Risk Analysis for the Pharos Ecosystem</p>
+        </header>
+
+        <!-- Input Section -->
+        <section class="input-section">
+            <div class="input-card">
+                <label for="wallet-input" class="input-label">Enter Wallet Address</label>
+                <div class="input-row">
+                    <input
+                        type="text"
+                        id="wallet-input"
+                        class="wallet-input"
+                        placeholder="0x..."
+                        spellcheck="false"
+                        autocomplete="off"
+                    />
+                    <button id="analyze-btn" class="btn-primary">
+                        <span class="btn-icon">&#x2192;</span>
+                        Analyze
+                    </button>
+                </div>
+                <div id="validation-error" class="validation-error hidden"></div>
+                <div class="quick-links">
+                    <span class="quick-label">Test wallets:</span>
+                    <button class="quick-btn" data-address="0x33aD3000126D3257110fa8B4Db038059cF684614">Safe</button>
+                    <button class="quick-btn" data-address="0x0000000000000000000000000000000000000000">Empty</button>
+                    <button class="quick-btn" data-address="0xRecOVERy1234567890abcdef1234567890abcdef12">Suspicious</button>
+                    <button class="quick-btn" data-address="0xdead000000000000000000000000000000000000">High Risk</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Loading -->
+        <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+            <p class="loading-text">Analyzing wallet...</p>
+        </div>
+
+        <!-- Results Section -->
+        <section id="results" class="results-section hidden">
+            <!-- Risk Badge -->
+            <div class="risk-badge-container">
+                <div id="risk-badge" class="risk-badge">
+                    <span id="risk-score" class="risk-score">0</span>
+                    <span id="risk-level" class="risk-level">LOW</span>
+                </div>
+            </div>
+
+            <!-- Summary -->
+            <div id="summary" class="summary-card">
+                <p id="summary-text"></p>
+            </div>
+
+            <!-- Metrics -->
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-icon">&#x1F4B0;</div>
+                    <div class="metric-value" id="metric-tx-count">0</div>
+                    <div class="metric-label">Transactions</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">&#x1F517;</div>
+                    <div class="metric-value" id="metric-outgoing">0</div>
+                    <div class="metric-label">Outgoing Txs</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">&#x1F4CA;</div>
+                    <div class="metric-value" id="metric-diversity">0</div>
+                    <div class="metric-label">Diversity Ratio</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">&#x1F465;</div>
+                    <div class="metric-value" id="metric-contracts">0</div>
+                    <div class="metric-label">Recipients</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">&#x1F4B5;</div>
+                    <div class="metric-value" id="metric-balance">0</div>
+                    <div class="metric-label">Balance (PHAROS)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">&#x1F4C5;</div>
+                    <div class="metric-value" id="metric-age">0</div>
+                    <div class="metric-label">Wallet Age (days)</div>
+                </div>
+            </div>
+
+            <!-- Flags -->
+            <div class="flags-section">
+                <h2 class="flags-title">&#x2691; Flags &amp; Alerts</h2>
+                <div id="flags-list" class="flags-list"></div>
+                <p id="no-flags" class="no-flags hidden">No flags detected. Wallet appears normal.</p>
+            </div>
+
+            <!-- Address Display -->
+            <div class="address-display">
+                <span class="address-label">Analyzed Address:</span>
+                <code id="analyzed-address" class="address-value"></code>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>PharosGuard v1.0.0 &mdash; Pharos Ecosystem (Chain ID: 1672)</p>
+            <p class="footer-note">RPC: <code>https://rpc.pharos.xyz</code></p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
