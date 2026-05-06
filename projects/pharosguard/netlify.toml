@@ -1,0 +1,20 @@
+# PharosGuard — Netlify Deployment Config
+# Deploys the static frontend only. Backend runs separately.
+
+[build]
+  publish = "frontend/"
+  command = ""
+
+# Redirect all 404s to index.html (SPA fallback)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Headers
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
