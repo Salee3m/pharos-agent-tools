@@ -13,9 +13,9 @@
         // Allow override via data attribute or environment
         const meta = document.querySelector('meta[name="api-base"]');
         if (meta) return meta.getAttribute("content");
-        // Auto-detect: if not localhost, use Tailscale funnel URL
+        // Auto-detect: if not localhost, use same-origin (Render deploy)
         if (window.location.hostname !== "localhost" && window.location.hostname !== "127.0.0.1") {
-            return "https://hermes.tail07438b.ts.net";
+            return "";
         }
         // Default for local development
         return "http://localhost:8000";
