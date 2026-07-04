@@ -29,6 +29,17 @@ def test_create_scan_completes_for_example_dot_com():
     assert "locked" in scan
 
 
+def test_okx_agent_payment_challenge_enabled_by_default(monkeypatch):
+    monkeypatch.delenv("PHAROSGUARD_OKX_PAYMENTS_ENABLED", raising=False)
+    client = TestClient(app)
+    wallet = "0x33aD3000126D3257110fa8B4Db038059cF684614"
+
+    response = client.get(f"/analyze/{wallet}")
+
+    assert response.status_code == 402
+    assert "PAYMENT-REQUIRED" in response.headers
+
+
 def test_okx_agent_payment_challenge_when_enabled(monkeypatch):
     monkeypatch.setenv("PHAROSGUARD_OKX_PAYMENTS_ENABLED", "true")
     client = TestClient(app)

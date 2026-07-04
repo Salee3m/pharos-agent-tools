@@ -120,7 +120,7 @@ def _has_payment_signature(request: Request) -> bool:
 
 
 def _okx_payments_enabled() -> bool:
-    return _truthy(os.getenv("PHAROSGUARD_OKX_PAYMENTS_ENABLED"))
+    return _truthy(os.getenv("PHAROSGUARD_OKX_PAYMENTS_ENABLED", "true"))
 
 
 class ScanCreateRequest(BaseModel):
