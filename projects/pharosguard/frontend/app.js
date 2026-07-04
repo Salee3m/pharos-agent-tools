@@ -1,265 +1,164 @@
-/**
- * PharosGuard — Frontend App Logic
- * Wallet risk analysis for the Pharos ecosystem.
- */
-
 (function () {
     "use strict";
 
-    // --- Configuration ---
-    // The API base URL. In production, this would point to the deployed backend.
-    // For development, we default to localhost:8000.
-    const API_BASE = (function () {
-        // Allow override via data attribute or environment
-        const meta = document.querySelector('meta[name="api-base"]');
-        if (meta) return meta.getAttribute("content");
-        // Auto-detect: if not localhost, use same-origin (Render deploy)
-        if (window.location.hostname !== "localhost" && window.location.hostname !== "127.0.0.1") {
-            return "";
-        }
-        // Default for local development
-        return "http://localhost:8000";
-    })();
+    const API_BASE = "";
 
-    // --- DOM References ---
-    const walletInput = document.getElementById("wallet-input");
-    const analyzeBtn = document.getElementById("analyze-btn");
-    const validationError = document.getElementById("validation-error");
-    const loading = document.getElementById("loading");
-    const resultsSection = document.getElementById("results");
-    const riskBadge = document.getElementById("risk-badge");
-    const riskScoreEl = document.getElementById("risk-score");
-    const riskLevelEl = document.getElementById("risk-level");
-    const summaryText = document.getElementById("summary-text");
-    const metricTxCount = document.getElementById("metric-tx-count");
-    const metricContracts = document.getElementById("metric-contracts");
-    const metricDiversity = document.getElementById("metric-diversity");
-    const metricAge = document.getElementById("metric-age");
-    const flagsList = document.getElementById("flags-list");
-    const noFlags = document.getElementById("no-flags");
-    const analyzedAddress = document.getElementById("analyzed-address");
-    const quickBtns = document.querySelectorAll(".quick-btn");
+    const domainInput = document.getElementById("domain-input");
+    const scanBtn = document.getElementById("scan-btn");
+    const errorEl = document.getElementById("error");
+    const loadingEl = document.getElementById("loading");
+    const resultsEl = document.getElementById("results");
+    const scoreEl = document.getElementById("score");
+    const scoreBandEl = document.getElementById("score-band");
+    const summaryEl = document.getElementById("summary");
+    const categoryGrid = document.getElementById("category-grid");
+    const findingsEl = document.getElementById("findings");
+    const emailInput = document.getElementById("email-input");
+    const unlockBtn = document.getElementById("unlock-btn");
+    const unlockStatus = document.getElementById("unlock-status");
+    const fullReport = document.getElementById("full-report");
+    const reportJson = document.getElementById("report-json");
 
-    // --- EVM Address Validation ---
-    const EVM_REGEX = /^0x[a-fA-F0-9]{40}$/;
+    let currentScanId = null;
 
-    function isValidEVMAddress(addr) {
-        return EVM_REGEX.test(addr.trim());
+    function showError(message) {
+        errorEl.textContent = message;
+        errorEl.classList.remove("hidden");
     }
 
-    // --- UI Helpers ---
-    function showValidationError(msg) {
-        validationError.textContent = msg;
-        validationError.classList.remove("hidden");
-        walletInput.classList.add("error");
+    function clearError() {
+        errorEl.textContent = "";
+        errorEl.classList.add("hidden");
     }
 
-    function hideValidationError() {
-        validationError.classList.add("hidden");
-        walletInput.classList.remove("error");
+    function setLoading(isLoading) {
+        loadingEl.classList.toggle("hidden", !isLoading);
+        scanBtn.disabled = isLoading;
+        scanBtn.textContent = isLoading ? "Scanning..." : "Scan";
     }
 
-    function showLoading() {
-        loading.classList.remove("hidden");
-        resultsSection.classList.add("hidden");
-        analyzeBtn.disabled = true;
-    }
-
-    function hideLoading() {
-        loading.classList.add("hidden");
-        analyzeBtn.disabled = false;
-    }
-
-    function showResults(data) {
-        resultsSection.classList.remove("hidden");
-        resultsSection.style.animation = "none";
-        // Force reflow to restart animation
-        void resultsSection.offsetHeight;
-        resultsSection.style.animation = "fadeInUp 0.4s ease-out";
-    }
-
-    function clearResults() {
-        resultsSection.classList.add("hidden");
-        flagsList.innerHTML = "";
-    }
-
-    // --- Risk Badge Rendering ---
-    function renderRiskBadge(score, level) {
-        // Remove existing classes
-        riskBadge.classList.remove("low", "medium", "high");
-
-        const levelClass = level.toLowerCase();
-        riskBadge.classList.add(levelClass);
-
-        riskScoreEl.textContent = score;
-        riskLevelEl.textContent = level.toUpperCase();
-    }
-
-    // --- Metrics Rendering ---
-    function renderMetrics(metrics) {
-        metricTxCount.textContent = metrics.transaction_count ?? 0;
-        metricContracts.textContent = metrics.unique_recipients ?? 0;
-        metricDiversity.textContent = metrics.interaction_diversity ?? 0;
-        metricAge.textContent = metrics.wallet_age_days ?? 0;
-        // Additional metrics
-        var balanceEl = document.getElementById("metric-balance");
-        if (balanceEl) balanceEl.textContent = metrics.balance_pharos || "0";
-        var outgoingEl = document.getElementById("metric-outgoing");
-        if (outgoingEl) outgoingEl.textContent = metrics.outgoing_transactions ?? 0;
-    }
-
-    // --- Flags Rendering ---
-    function renderFlags(flags) {
-        flagsList.innerHTML = "";
-
-        if (!flags || flags.length === 0) {
-            noFlags.classList.remove("hidden");
-            return;
-        }
-
-        noFlags.classList.add("hidden");
-
-        const typeIcons = {
-            critical: "\u26A0\uFE0F",  // ⚠️
-            warning: "\u26A0",          // ⚠
-            info: "\u2139\uFE0F",       // ℹ️
-            positive: "\u2705",         // ✅
-        };
-
-        flags.forEach(function (flag, index) {
-            const icon = typeIcons[flag.type] || "\u2139\uFE0F";
-
-            const item = document.createElement("div");
-            item.className = "flag-item " + flag.type;
-            item.style.animationDelay = (index * 0.08) + "s";
-
-            item.innerHTML =
-                '<span class="flag-icon">' + icon + '</span>' +
-                '<div class="flag-content">' +
-                    '<div class="flag-label">' + escapeHtml(flag.label) + '</div>' +
-                    '<div class="flag-desc">' + escapeHtml(flag.description) + '</div>' +
-                '</div>';
-
-            flagsList.appendChild(item);
-        });
-    }
-
-    // --- Simple HTML escaping ---
-    function escapeHtml(str) {
-        if (!str) return "";
-        var div = document.createElement("div");
-        div.appendChild(document.createTextNode(str));
+    function escapeHtml(value) {
+        const div = document.createElement("div");
+        div.appendChild(document.createTextNode(value == null ? "" : String(value)));
         return div.innerHTML;
     }
 
-    // --- Address Display ---
-    function renderAddress(address) {
-        analyzedAddress.textContent = address;
+    function scoreClass(score) {
+        if (score >= 75) return "good";
+        if (score >= 50) return "warn";
+        return "bad";
     }
 
-    // --- Main Analysis Function ---
-    async function analyzeWallet(address) {
-        hideValidationError();
-        clearResults();
-        showLoading();
-
-        try {
-            const url = API_BASE + "/analyze/" + encodeURIComponent(address.trim());
-
-            const response = await fetch(url, {
-                method: "GET",
-                headers: {
-                    "Accept": "application/json",
-                },
-            });
-
-            if (!response.ok) {
-                let errMsg = "Server returned " + response.status;
-                try {
-                    const errData = await response.json();
-                    if (errData.detail) errMsg = errData.detail;
-                } catch (e) {}
-                throw new Error(errMsg);
-            }
-
-            const data = await response.json();
-
-            if (data.error) {
-                throw new Error(data.message || "Unknown error from server");
-            }
-
-            // Render results
-            renderRiskBadge(data.risk_score, data.risk_level);
-            renderMetrics(data.metrics);
-            renderFlags(data.flags);
-            renderAddress(data.wallet_address);
-
-            // Summary
-            summaryText.textContent = data.summary || "No summary available.";
-
-            showResults(data);
-
-        } catch (err) {
-            hideLoading();
-            showValidationError("Analysis failed: " + err.message);
-            console.error("PharosGuard analysis error:", err);
-        } finally {
-            hideLoading();
-        }
-    }
-
-    // --- Event Handlers ---
-    function handleAnalyze() {
-        const rawAddress = walletInput.value;
-        const address = rawAddress.trim();
-
-        if (!address) {
-            showValidationError("Please enter a wallet address.");
-            return;
-        }
-
-        if (!isValidEVMAddress(address)) {
-            showValidationError(
-                "Invalid address format. EVM addresses must be 42 characters starting with '0x' and contain only hex characters (0-9, a-f, A-F)."
-            );
-            return;
-        }
-
-        hideValidationError();
-        analyzeWallet(address);
-    }
-
-    // --- Quick Button Handlers ---
-    quickBtns.forEach(function (btn) {
-        btn.addEventListener("click", function () {
-            const address = btn.getAttribute("data-address");
-            walletInput.value = address;
-            hideValidationError();
-            // Auto-trigger analysis
-            handleAnalyze();
+    function renderCategories(scores) {
+        categoryGrid.innerHTML = "";
+        Object.entries(scores || {}).forEach(([name, value]) => {
+            const item = document.createElement("div");
+            item.className = "category-card";
+            item.innerHTML = `
+                <div class="small-label">${escapeHtml(name.replaceAll("_", " "))}</div>
+                <div class="category-score">${escapeHtml(value)}</div>
+            `;
+            categoryGrid.appendChild(item);
         });
-    });
+    }
 
-    // --- Enter key support ---
-    walletInput.addEventListener("keydown", function (e) {
-        if (e.key === "Enter") {
-            e.preventDefault();
-            handleAnalyze();
+    function renderFindings(findings) {
+        findingsEl.innerHTML = "";
+        (findings || []).forEach((finding) => {
+            const item = document.createElement("article");
+            item.className = "finding " + escapeHtml(finding.severity || "info");
+            item.innerHTML = `
+                <div class="finding-top">
+                    <span class="severity">${escapeHtml(finding.severity || "info")}</span>
+                    <h3>${escapeHtml(finding.title)}</h3>
+                </div>
+                <p>${escapeHtml(finding.detail)}</p>
+                <p class="recommendation"><strong>Fix:</strong> ${escapeHtml(finding.recommendation)}</p>
+            `;
+            findingsEl.appendChild(item);
+        });
+    }
+
+    function renderScan(data) {
+        currentScanId = data.scan_id;
+        resultsEl.classList.remove("hidden");
+        fullReport.classList.add("hidden");
+        unlockStatus.textContent = "";
+        const score = data.score || 0;
+        scoreEl.textContent = score;
+        scoreEl.className = "score " + scoreClass(score);
+        scoreBandEl.textContent = data.score_band || "Unknown";
+        summaryEl.textContent = data.summary_preview || "No summary generated.";
+        renderCategories(data.category_scores || {});
+        renderFindings(data.top_findings || []);
+    }
+
+    async function scanDomain() {
+        clearError();
+        const domain = domainInput.value.trim();
+        if (!domain) {
+            showError("Enter a domain, for example example.com");
+            return;
         }
+        resultsEl.classList.add("hidden");
+        setLoading(true);
+        try {
+            const response = await fetch(API_BASE + "/api/scans", {
+                method: "POST",
+                headers: { "Content-Type": "application/json", "Accept": "application/json" },
+                body: JSON.stringify({ domain })
+            });
+            const data = await response.json();
+            if (!response.ok) throw new Error(data.detail || "Scan failed.");
+            if (data.status === "failed") throw new Error(data.error_message || "Scan failed.");
+            renderScan(data);
+        } catch (err) {
+            showError(err.message || "Scan failed.");
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    async function unlockReport() {
+        clearError();
+        if (!currentScanId) {
+            showError("Run a scan first.");
+            return;
+        }
+        const email = emailInput.value.trim();
+        if (!email || !email.includes("@")) {
+            unlockStatus.textContent = "Enter a valid email address.";
+            return;
+        }
+        unlockBtn.disabled = true;
+        unlockStatus.textContent = "Unlocking...";
+        try {
+            const leadResponse = await fetch(API_BASE + "/api/leads", {
+                method: "POST",
+                headers: { "Content-Type": "application/json", "Accept": "application/json" },
+                body: JSON.stringify({ scan_id: currentScanId, email, role: "MVP user", marketing_consent: true })
+            });
+            const leadData = await leadResponse.json();
+            if (!leadResponse.ok) throw new Error(leadData.detail || "Unlock failed.");
+
+            const reportResponse = await fetch(API_BASE + "/api/reports/" + encodeURIComponent(currentScanId));
+            const reportData = await reportResponse.json();
+            if (!reportResponse.ok) throw new Error(reportData.detail || "Report fetch failed.");
+            unlockStatus.textContent = "Unlocked.";
+            fullReport.classList.remove("hidden");
+            reportJson.textContent = JSON.stringify(reportData, null, 2);
+        } catch (err) {
+            unlockStatus.textContent = err.message || "Unlock failed.";
+        } finally {
+            unlockBtn.disabled = false;
+        }
+    }
+
+    scanBtn.addEventListener("click", scanDomain);
+    unlockBtn.addEventListener("click", unlockReport);
+    domainInput.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") scanDomain();
     });
-
-    // --- Clear error on input ---
-    walletInput.addEventListener("input", function () {
-        hideValidationError();
-    });
-
-    // --- Main button click ---
-    analyzeBtn.addEventListener("click", handleAnalyze);
-
-    // --- Initial focus ---
-    walletInput.focus();
-
-    console.log("PharosGuard v1.0.0 loaded");
-    console.log("API endpoint:", API_BASE + "/analyze/{wallet}");
-
+    domainInput.addEventListener("input", clearError);
+    domainInput.focus();
 })();

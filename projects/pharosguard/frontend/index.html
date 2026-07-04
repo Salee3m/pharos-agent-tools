@@ -3,128 +3,78 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PharosGuard — Wallet Risk Analysis</title>
+    <title>PharosGuard — AI Website Security Intelligence</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
-        <header class="header">
-            <div class="logo">
-                <span class="logo-icon">&#x1F6E1;</span>
-                <h1>PharosGuard</h1>
-            </div>
-            <p class="subtitle">Wallet Risk Analysis for the Pharos Ecosystem</p>
+    <main class="shell">
+        <header class="hero">
+            <div class="eyebrow">Non-invasive public checks</div>
+            <h1>PharosGuard</h1>
+            <p>AI-powered website security intelligence for founders, builders, and small teams. Enter a domain and get a practical public security posture report.</p>
         </header>
 
-        <!-- Input Section -->
-        <section class="input-section">
-            <div class="input-card">
-                <label for="wallet-input" class="input-label">Enter Wallet Address</label>
-                <div class="input-row">
-                    <input
-                        type="text"
-                        id="wallet-input"
-                        class="wallet-input"
-                        placeholder="0x..."
-                        spellcheck="false"
-                        autocomplete="off"
-                    />
-                    <button id="analyze-btn" class="btn-primary">
-                        <span class="btn-icon">&#x2192;</span>
-                        Analyze
-                    </button>
-                </div>
-                <div id="validation-error" class="validation-error hidden"></div>
-                <div class="quick-links">
-                    <span class="quick-label">Test wallets:</span>
-                    <button class="quick-btn" data-address="0x33aD3000126D3257110fa8B4Db038059cF684614">Safe</button>
-                    <button class="quick-btn" data-address="0xdead000000000000000000000000000000000000">Empty</button>
-                    <button class="quick-btn" data-address="0xRecOVERy1234567890abcdef1234567890abcdef12">Suspicious</button>
-                    <button class="quick-btn" data-address="0x0000000000000000000000000000000000000000">High Risk</button>
-                </div>
+        <section class="scan-card">
+            <label for="domain-input">Website domain</label>
+            <div class="input-row">
+                <input id="domain-input" type="text" placeholder="example.com" autocomplete="off" spellcheck="false" />
+                <button id="scan-btn">Scan</button>
             </div>
+            <p id="error" class="error hidden"></p>
+            <p class="hint">Checks: DNS, SSL/TLS, HTTP security headers, SPF/DMARC, and basic public technology signals.</p>
         </section>
 
-        <!-- Loading -->
-        <div id="loading" class="loading hidden">
+        <section id="loading" class="loading hidden">
             <div class="spinner"></div>
-            <p class="loading-text">Analyzing wallet...</p>
-        </div>
-
-        <!-- Results Section -->
-        <section id="results" class="results-section hidden">
-            <!-- Risk Badge -->
-            <div class="risk-badge-container">
-                <div id="risk-badge" class="risk-badge">
-                    <span id="risk-score" class="risk-score">0</span>
-                    <span id="risk-level" class="risk-level">LOW</span>
-                </div>
-            </div>
-
-            <!-- Summary -->
-            <div id="summary" class="summary-card">
-                <p id="summary-text"></p>
-            </div>
-
-            <!-- Metrics -->
-            <div class="metrics-grid">
-                <div class="metric-card">
-                    <div class="metric-icon">&#x1F4B0;</div>
-                    <div class="metric-value" id="metric-tx-count">0</div>
-                    <div class="metric-label">Transactions</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-icon">&#x1F517;</div>
-                    <div class="metric-value" id="metric-outgoing">0</div>
-                    <div class="metric-label">Outgoing Txs</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-icon">&#x1F4CA;</div>
-                    <div class="metric-value" id="metric-diversity">0</div>
-                    <div class="metric-label">Diversity Ratio</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-icon">&#x1F465;</div>
-                    <div class="metric-value" id="metric-contracts">0</div>
-                    <div class="metric-label">Recipients</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-icon">&#x1F4B5;</div>
-                    <div class="metric-value" id="metric-balance">0</div>
-                    <div class="metric-label">Balance (PHAROS)</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-icon">&#x1F4C5;</div>
-                    <div class="metric-value" id="metric-age">0</div>
-                    <div class="metric-label">Wallet Age (days)</div>
-                </div>
-            </div>
-
-            <!-- Flags -->
-            <div class="flags-section">
-                <h2 class="flags-title">&#x2691; Flags &amp; Alerts</h2>
-                <div id="flags-list" class="flags-list"></div>
-                <p id="no-flags" class="no-flags hidden">No flags detected. Wallet appears normal.</p>
-            </div>
-
-            <!-- Address Display -->
-            <div class="address-display">
-                <span class="address-label">Analyzed Address:</span>
-                <code id="analyzed-address" class="address-value"></code>
-            </div>
+            <span>Running passive scan...</span>
         </section>
 
-        <!-- Footer -->
-        <footer class="footer">
-            <p>PharosGuard v1.0.0 &mdash; Pharos Ecosystem (Chain ID: 1672)</p>
-            <p class="footer-note">RPC: <code>https://rpc.pharos.xyz</code></p>
-        </footer>
-    </div>
+        <section id="results" class="results hidden">
+            <div class="score-card">
+                <div>
+                    <div class="small-label">Security posture score</div>
+                    <div id="score-band" class="score-band">-</div>
+                </div>
+                <div id="score" class="score">0</div>
+            </div>
 
+            <article class="summary-card">
+                <h2>AI report preview</h2>
+                <p id="summary"></p>
+            </article>
+
+            <div id="category-grid" class="category-grid"></div>
+
+            <section class="findings-card">
+                <h2>Top findings</h2>
+                <div id="findings"></div>
+            </section>
+
+            <section id="unlock-card" class="unlock-card">
+                <h2>Unlock full report</h2>
+                <p>Submit your email to reveal the full report JSON, all findings, scanner evidence, and implementation notes.</p>
+                <div class="input-row stacked-mobile">
+                    <input id="email-input" type="email" placeholder="you@example.com" />
+                    <button id="unlock-btn">Unlock</button>
+                </div>
+                <p id="unlock-status" class="hint"></p>
+            </section>
+
+            <section id="full-report" class="full-report hidden">
+                <h2>Full report</h2>
+                <pre id="report-json"></pre>
+            </section>
+        </section>
+
+        <section class="disclaimer">
+            <strong>Scope:</strong> PharosGuard performs non-invasive checks using publicly available website, DNS, SSL, and HTTP header information. It does not perform penetration testing, exploit attempts, brute force attacks, or intrusive scanning. Results are informational and should not be treated as a full security audit.
+        </section>
+
+        <footer>PharosGuard MVP v0.2.0 • Website security intelligence</footer>
+    </main>
     <script src="app.js"></script>
 </body>
 </html>

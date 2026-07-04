@@ -1,0 +1,135 @@
+{
+  "role": "asp",
+  "agent": {
+    "name": "PharosGuard",
+    "description": "Security intelligence for Pharos and EVM wallets. PharosGuard scans one public 0x address and returns a clear risk score, risk level, behavioral metrics, flags, and JSON summary. It never asks for private keys, seed phrases, signatures, or personal data.",
+    "avatar_file": "projects/pharosguard/docs/pharosguard-avatar.png"
+  },
+  "services": [
+    {
+      "serviceName": "PharosGuard Wallet Risk Scan",
+      "serviceDescription": "Summary: Analyzes one public Pharos/EVM wallet or contract address and returns risk score, risk level, behavior metrics, flags, and a concise security summary.\nInput requirements: Provide exactly one 42-character 0x EVM address. Do not provide private keys, seed phrases, signatures, passwords, API keys, or personal data.\nOutput: JSON with wallet_address, risk_score, risk_level, data_source, metrics, risk_components, flags, and summary.\nPayment: This paid A2MCP endpoint is gated with OKX Agent Payments Protocol. Unpaid calls receive HTTP 402 with a PAYMENT-REQUIRED challenge; paid retries use PAYMENT-SIGNATURE.",
+      "serviceType": "A2MCP",
+      "fee": "0.25",
+      "endpoint": "https://www.pharosguard.xyz/analyze/{wallet_address}",
+      "method": "GET",
+      "input_schema": {
+        "type": "object",
+        "required": [
+          "wallet_address"
+        ],
+        "properties": {
+          "wallet_address": {
+            "type": "string",
+            "pattern": "^0x[a-fA-F0-9]{40}$",
+            "description": "A single public EVM wallet or contract address. Example: 0x33aD3000126D3257110fa8B4Db038059cF684614"
+          }
+        },
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "required": [
+          "wallet_address",
+          "risk_score",
+          "risk_level",
+          "data_source",
+          "metrics",
+          "risk_components",
+          "flags",
+          "summary"
+        ],
+        "properties": {
+          "wallet_address": {
+            "type": "string"
+          },
+          "risk_score": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "risk_level": {
+            "type": "string",
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ]
+          },
+          "data_source": {
+            "type": "string"
+          },
+          "metrics": {
+            "type": "object"
+          },
+          "risk_components": {
+            "type": "array"
+          },
+          "flags": {
+            "type": "array"
+          },
+          "summary": {
+            "type": "string"
+          }
+        }
+      },
+      "payment_protocol": "OKX Agent Payments Protocol",
+      "payment_challenge": {
+        "status_code": 402,
+        "challenge_header": "PAYMENT-REQUIRED",
+        "retry_header": "PAYMENT-SIGNATURE",
+        "x402Version": 2,
+        "scheme": "exact",
+        "network": "xlayer",
+        "amount_atomic": "250000",
+        "currency": "USDC",
+        "service_type": "A2MCP"
+      }
+    }
+  ],
+  "review_evidence": {
+    "openapi_url": "https://www.pharosguard.xyz/openapi.json",
+    "verified_endpoint_test": {
+      "url": "https://www.pharosguard.xyz/analyze/0x33aD3000126D3257110fa8B4Db038059cF684614",
+      "http_status": 200,
+      "content_type": "application/json",
+      "risk_score": 0,
+      "risk_level": "low",
+      "data_source": "live",
+      "note": "After PHAROSGUARD_OKX_PAYMENTS_ENABLED=true, unauthenticated requests should return 402; successful paid retries with PAYMENT-SIGNATURE return the wallet-risk JSON."
+    },
+    "invalid_input_test": {
+      "url": "https://www.pharosguard.xyz/analyze/not-a-wallet",
+      "http_status": 400,
+      "expected_behavior": "Rejects invalid wallet input with JSON error; does not process secrets or personal data."
+    },
+    "redirect_note": "Use the www endpoint. The bare domain redirects to www, so www avoids reviewer/client redirect issues.",
+    "payment_required_test": {
+      "url": "https://www.pharosguard.xyz/analyze/0x33aD3000126D3257110fa8B4Db038059cF684614",
+      "http_status": 402,
+      "expected_header": "PAYMENT-REQUIRED",
+      "expected_body_fields": [
+        "x402Version",
+        "resource",
+        "accepts"
+      ],
+      "retry_header": "PAYMENT-SIGNATURE"
+    }
+  },
+  "safety_notes": [
+    "Public-address analysis only.",
+    "Never request private keys, seed phrases, signatures, passwords, API keys, or personal data.",
+    "Endpoint accepts one wallet_address value and rejects invalid non-0x inputs.",
+    "A2MCP is preferred because this is a deterministic API/tool call, not a multi-turn A2A task."
+  ],
+  "blocked_until": [
+    "User explicitly approves any new onchain ASP creation or replacement listing.",
+    "OnchainOS wallet login succeeds in the active session.",
+    "ASP avatar is uploaded if the registration flow requires a hosted avatar URL."
+  ],
+  "deployment_notes": [
+    "Set PHAROSGUARD_OKX_PAYMENTS_ENABLED=true on the production A2MCP service before OKX.AI resubmission.",
+    "Set PHAROSGUARD_OKX_PAYMENT_RECEIVER to the receiving wallet and keep secrets out of repository files.",
+    "Optional overrides: PHAROSGUARD_OKX_PAYMENT_AMOUNT_ATOMIC, PHAROSGUARD_OKX_PAYMENT_NETWORK, PHAROSGUARD_OKX_PAYMENT_ASSET, PHAROSGUARD_OKX_PAYMENT_CURRENCY, PHAROSGUARD_OKX_PAYMENT_DECIMALS."
+  ]
+}

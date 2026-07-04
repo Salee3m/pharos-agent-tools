@@ -9,3 +9,7 @@ services:
     envVars:
       - key: PYTHON_VERSION
         value: 3.11
+      - key: PHAROSGUARD_OKX_PAYMENTS_ENABLED
+        value: "true"
+      - key: PHAROSGUARD_OKX_PAYMENT_RECEIVER
+        value: 0x33aD3000126D3257110fa8B4Db038059cF684614
