@@ -3,6 +3,13 @@ import { TerminalSquare } from "lucide-react";
 
 const experiences = [
   {
+    role: "Founder — Salim Technology",
+    company: "Salim Technology",
+    period: "2025 - Present",
+    description: "Building the company end to end — custom software, AI & automation and cloud infrastructure, plus live products Salim SMS and Salim Tools. Owns the brand design system and deploys on Cloudflare + Render.",
+    tags: ["SaaS", "Products", "Design System", "Cloudflare"]
+  },
+  {
     role: "Automation Architect",
     company: "Freelance / Independent",
     period: "2025 - Present",
@@ -13,14 +20,14 @@ const experiences = [
     role: "Web Developer",
     company: "Freelance / Independent",
     period: "2018 - Present",
-    description: "Building responsive websites and web applications using modern frontend technologies. From semantic HTML and CSS to full React + TypeScript apps with Tailwind CSS and shadcn/ui. Deploying on Netlify with custom domains, SSL, and DNS configuration.",
+    description: "Responsive websites and web apps — semantic HTML to full React + TypeScript with Tailwind and shadcn/ui, on Netlify.",
     tags: ["HTML", "CSS", "JavaScript", "React", "TypeScript", "Tailwind", "Netlify"]
   },
   {
     role: "Network & Systems Engineer",
     company: "IT Infrastructure Sector",
     period: "2023 - 2025",
-    description: "Worked in core network engineering — configuring and maintaining routers, switches, and network infrastructure. Hands-on with IP addressing, subnetting, routing protocols, and real-world network troubleshooting.",
+    description: "Core network engineering — routers, switches, IP addressing, subnetting, routing protocols, and troubleshooting.",
     tags: ["TCP/IP", "Routing", "Troubleshooting"]
   }
 ];

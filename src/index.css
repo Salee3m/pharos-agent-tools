@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 @plugin "@tailwindcss/typography";
@@ -59,11 +59,15 @@
   --elevate-1: 0 1px 2px rgba(0,0,0,0.05);
   --elevate-2: 0 4px 12px rgba(0,0,0,0.05);
 
+  /* physical motion curves (kinetics-style spring feel) */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-snap: cubic-bezier(0.5, 0.9, 0.45, 1);
+
   --background: 0 0% 100%;
   --foreground: 240 10% 10%;
   --border: 240 5% 90%;
   --input: 240 5% 90%;
-  --ring: 240 10% 10%;
+  --ring: 158 74% 28%;
 
   --card: 0 0% 99%;
   --card-foreground: 240 10% 10%;
@@ -79,12 +83,12 @@
   --secondary-foreground: 240 10% 10%;
   --muted: 240 5% 96%;
   --muted-foreground: 240 5% 45%;
-  --accent: 240 10% 10%;
+  --accent: 158 74% 28%;
   --accent-foreground: 0 0% 100%;
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 100%;
 
-  --app-font-sans: 'Inter', sans-serif;
+  --app-font-sans: 'Archivo', 'Inter', sans-serif;
   --app-font-serif: Georgia, serif;
   --app-font-mono: 'JetBrains Mono', monospace;
   --radius: 0.5rem;
@@ -103,7 +107,7 @@
   --foreground: 0 0% 98%;
   --border: 240 10% 12%;
   --input: 240 10% 12%;
-  --ring: 0 0% 98%;
+  --ring: 158 70% 52%;
 
   --card: 240 10% 5%;
   --card-foreground: 0 0% 98%;
@@ -119,7 +123,7 @@
   --secondary-foreground: 0 0% 98%;
   --muted: 240 10% 10%;
   --muted-foreground: 240 5% 65%;
-  --accent: 0 0% 98%;
+  --accent: 158 70% 52%;
   --accent-foreground: 240 10% 4%;
   --destructive: 0 62% 30%;
   --destructive-foreground: 0 0% 98%;
@@ -183,4 +187,42 @@
 
 .dark .glow-heading {
   text-shadow: 0 0 20px rgba(255,255,255,0.1);
+}
+
+/* ============ machined system detail (anti-vibecode) ============ */
+/* Three rounded corners, one sharp (bottom-left) — Interlock-style. */
+.card-machined {
+  border-radius: 18px 18px 18px 3px;
+}
+
+/* Working elevation + pressed states (fixes previously-inert hover-elevate). */
+.hover-elevate {
+  transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
+}
+.hover-elevate:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--elevate-2);
+}
+.active-elevate-2:active {
+  transform: translateY(0);
+  box-shadow: var(--elevate-1);
+}
+
+/* Fluid display type (utopia-style clamp) for the hero + big headings. */
+.text-fluid-display {
+  font-size: clamp(2.8rem, 4vw + 1.5rem, 6.5rem);
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+}
+
+/* ============ accessible motion: honor prefers-reduced-motion ============ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }

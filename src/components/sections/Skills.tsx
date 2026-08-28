@@ -4,7 +4,7 @@ const skillCategories = [
   {
     id: "SYS_01",
     title: "AI & Automation",
-    skills: ["Agent Systems", "Workflow Automation", "Prompt Engineering", "LLM Orchestration"]
+    skills: ["Agent Systems", "Workflow Automation", "Prompt Engineering", "LLM Orchestration", "Cron Systems"]
   },
   {
     id: "SYS_02",
@@ -14,23 +14,23 @@ const skillCategories = [
   {
     id: "SYS_03",
     title: "Web Development",
-    skills: ["React", "Vite", "TypeScript", "Tailwind CSS", "shadcn/ui", "REST APIs", "Netlify", "Responsive Design"]
+    skills: ["React", "Vite", "TypeScript", "Tailwind CSS", "shadcn/ui", "PWA / Offline", "REST APIs", "Responsive Design"]
   },
   {
     id: "SYS_04",
-    title: "Tools & Environments",
-    skills: ["Hermes", "OpenClaw", "Linux", "Git", "Cloud VMs"]
+    title: "Cloud & Infrastructure",
+    skills: ["Cloudflare Workers", "KV", "Render", "Linux", "Git", "Cloud VMs"]
   },
   {
     id: "SYS_05",
     title: "Programming & Systems",
-    skills: ["Python", "Bash Scripting", "CLI Usage", "Remote Server Management", "REST APIs"]
+    skills: ["Python", "FastAPI", "Bash Scripting", "CLI Usage", "Remote Server Management", "Webhooks"]
   }
 ];
 
 export function Skills() {
   return (
-    <section id="skills" className="py-32 bg-secondary/30">
+    <section id="skills" className="py-32">
       <div className="container mx-auto px-4 max-w-6xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

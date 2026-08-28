@@ -5,15 +5,14 @@ import { FaGithub, FaTwitter } from "react-icons/fa";
 
 export function Contact() {
   return (
-    <section id="contact" className="py-32 bg-secondary/30 border-t relative overflow-hidden">
-      <div className="absolute inset-0 bg-grid-pattern opacity-50" />
+    <section id="contact" className="py-32 relative overflow-hidden">
       <div className="container mx-auto px-4 max-w-4xl text-center relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="relative bg-card border rounded-2xl p-12 md:p-20 shadow-xl overflow-hidden module-card"
+          className="relative bg-card card-machined border p-12 md:p-20 shadow-sm overflow-hidden module-card"
         >
           
           <div className="w-16 h-16 rounded-xl bg-background border flex items-center justify-center mx-auto mb-8 relative z-10 shadow-sm">

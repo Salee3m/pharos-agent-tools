@@ -1,10 +1,9 @@
 import { motion } from "framer-motion";
-import { Terminal, Shield, Network, Server, Globe } from "lucide-react";
+import { Terminal, Network, Cloud, BrainCircuit, Globe } from "lucide-react";
 
 export function About() {
   return (
     <section id="about" className="py-32 relative">
-      <div className="absolute inset-0 bg-secondary/30" />
       <div className="container mx-auto px-4 max-w-6xl relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -23,19 +22,13 @@ export function About() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="lg:col-span-7 space-y-8 text-lg text-muted-foreground leading-relaxed"
+            className="lg:col-span-7 space-y-6 text-lg text-muted-foreground leading-relaxed"
           >
             <p className="text-xl text-foreground font-medium">
-              My work operates at the intersection of AI, web development, networking, and system-level engineering. I build everything from responsive web applications to autonomous AI agents — always with a focus on shipping real, deployable products.
+              I build and ship products — web apps, AI tools, automation systems and cloud infrastructure — end to end, from idea to live deployment.
             </p>
             <p>
-              On the frontend, I work with <strong className="text-foreground font-mono font-medium bg-muted px-1.5 py-0.5 rounded-sm">React</strong>, <strong className="text-foreground font-mono font-medium bg-muted px-1.5 py-0.5 rounded-sm">TypeScript</strong>, <strong className="text-foreground font-mono font-medium bg-muted px-1.5 py-0.5 rounded-sm">Tailwind CSS</strong>, and <strong className="text-foreground font-mono font-medium bg-muted px-1.5 py-0.5 rounded-sm">shadcn/ui</strong> to build polished, responsive sites deployed on Netlify with custom domains and SSL.
-            </p>
-            <p>
-              I have extensive experience deploying <strong className="text-foreground font-mono font-medium bg-muted px-1.5 py-0.5 rounded-sm">Hermes agents</strong> and configuring <strong className="text-foreground font-mono font-medium bg-muted px-1.5 py-0.5 rounded-sm">OpenClaw environments</strong> to bridge local systems with intelligent orchestration.
-            </p>
-            <p>
-              Comfortable in the terminal, I spend most of my time building CLI-based systems, managing remote Linux servers, and writing network-aware scripts that do the heavy lifting autonomously.
+              Frontend in React, TypeScript, Tailwind and shadcn/ui; backends in FastAPI and Cloudflare Workers. Systems live in the terminal — Hermes agents, multi-agent orchestration, Linux and network-aware automation.
             </p>
           </motion.div>
 
@@ -47,16 +40,16 @@ export function About() {
             className="lg:col-span-5 grid gap-4 relative"
           >
             <div className="absolute -left-8 top-0 bottom-0 w-px bg-border hidden lg:block" />
-            
+
             <div className="p-6 rounded-xl border bg-card module-card">
               <h3 className="font-mono text-sm text-muted-foreground mb-6 pb-4 border-b uppercase tracking-wider">System.Specs</h3>
               <ul className="space-y-6">
                 {[
+                  { icon: BrainCircuit, title: "AI & Agents", desc: "Hermes, multi-agent orchestration, automation" },
                   { icon: Globe, title: "Web Development", desc: "React, TypeScript, Tailwind, shadcn/ui" },
-                  { icon: Network, title: "2+ Years Networking", desc: "TCP/IP, Routing & Troubleshooting" },
-                  { icon: Terminal, title: "CLI-First Mindset", desc: "Linux & headless server management" },
-                  { icon: Shield, title: "Defensive Security", desc: "Resilient systems & secure automation" },
-                  { icon: Server, title: "Hermes + OpenClaw", desc: "Agent deployment & orchestration" }
+                  { icon: Cloud, title: "Cloud Infrastructure", desc: "Cloudflare Workers, Render, KV, CDN" },
+                  { icon: Terminal, title: "Backend & APIs", desc: "FastAPI, REST APIs, OTP/SMS + webhooks" },
+                  { icon: Network, title: "Networking", desc: "TCP/IP, routing & network troubleshooting" }
                 ].map((item, i) => (
                   <li key={i} className="flex gap-4 group">
                     <div className="flex-shrink-0 mt-1 w-8 h-8 rounded-full bg-secondary flex items-center justify-center border group-hover:border-foreground/30 transition-colors">

@@ -3,52 +3,53 @@ import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { ExternalLink, GitBranch } from "lucide-react";
 
+// Current, live deployments — kept in sync with what's actually shipped.
 const featuredProjects = [
   {
-    title: "Sirleeem.xyz — Portfolio Site",
+    title: "Salim Technology",
     description:
-      "Personal portfolio and project showcase built with React + Vite + shadcn/ui. Features dark-themed terminal aesthetic, live project cards, animated terminal window, and section-based layout.",
-    problem:
-      "Needed a professional landing page to showcase AI agent, Web3, and automation projects. Built a responsive single-page app with a dev/terminal theme that reflects the builder's identity.",
-    stack: ["React", "Vite", "shadcn/ui", "TypeScript", "Framer Motion", "Netlify", "Tailwind"],
-    link: "https://sirleeem.xyz",
+      "Flagship company and product line — intelligent systems, software and cloud infrastructure. A focused practice spanning custom software, AI & automation, and cloud infrastructure, built for performance and long-term maintainability.",
+    stats: "Live · salimtechnology.com · custom design system",
+    stack: ["React", "Vite", "Cloud Infrastructure", "AI & Automation", "Archivo", "Design System"],
+    link: "https://salimtechnology.com",
   },
   {
-    title: "PharosGuard — Wallet Risk Analysis",
+    title: "Salim Tools",
     description:
-      "Real-time wallet risk analysis tool for the Pharos ecosystem. Enter any 0x address and get instant trust signals — risk score (0-100), transaction velocity, interaction diversity, and suspicious pattern flags.",
-    problem:
-      "Pharos ecosystem needed a simple way to evaluate wallet trust. Built a tool that pulls live on-chain data from Pharos RPC + Pharosscan explorer API and generates instant risk profiles.",
-    stats: "Live at pharosguard.xyz · FastAPI + Tailscale Funnel",
-    stack: ["FastAPI", "Pharos RPC", "SocialScan API", "Netlify", "Tailscale"],
+      "A growing suite of fast, free, offline-first online utilities — a PDF editor, a drop tool and everyday helpers that just work, with no sign-up and no account required.",
+    stats: "Live · tools.salimtechnology.com · Cloudflare Worker + KV · PWA",
+    stack: ["React", "Vite", "Cloudflare Workers", "KV", "PWA", "Tailwind"],
+    link: "https://tools.salimtechnology.com",
+  },
+  {
+    title: "Salim SMS",
+    description:
+      "SMS verification and OTP delivery platform — instant number provisioning, real-time codes and a developer API for reliable phone verification at scale.",
+    stats: "Live · sms.salimtechnology.com · developer API",
+    stack: ["API", "OTP/SMS", "Provisioning", "Webhooks", "Paystack"],
+    link: "https://sms.salimtechnology.com",
+  },
+  {
+    title: "PharosGuard — AI Website Security",
+    description:
+      "Non-invasive website security intelligence. Enter any domain and get a public security posture report — DNS, SSL/TLS, HTTP security headers, SPF/DMARC plus an AI-written assessment of the findings.",
+    stats: "Live · pharosguard.xyz · FastAPI · AI report",
+    stack: ["FastAPI", "Python", "DNS/SSL", "Security Headers", "AI Report", "Tailscale"],
     link: "https://pharosguard.xyz",
   },
   {
-    title: "Pharos RWA Farm Tokenizer",
+    title: "AgentHansa Earning Agent",
     description:
-      "A real-world asset tokenization dApp on the Pharos blockchain. Tokenizes farm produce into digital assets on-chain — bridging agricultural commodities with DeFi liquidity.",
-    problem:
-      "Traditional farm produce lacks digital liquidity. Built a JSON-RPC dApp on Pharos Pacific Mainnet that connects MetaMask and represents real farm assets as on-chain tokens.",
-    stats: "Pharos Pacific Mainnet · ChainID 1672 · MetaMask",
-    stack: ["Pharos", "Solidity", "JSON-RPC", "MetaMask", "Netlify"],
-    link: "https://pharos-rwa.netlify.app",
-  },
-  {
-    title: "AgentHansa Autonomous Earning Agent",
-    description:
-      "A fully autonomous AI agent deployed on the AgentHansa marketplace (21K+ agents) that earns real USDC 24/7 — running cron-driven daily quests, catching red packets every 3 hours, and submitting alliance-war quests without human intervention.",
-    problem:
-      "Earning on a competitive AI agent marketplace required constant manual effort. Built an autonomous system that handles the full loop — checkins, quests, red packets, and submissions — running entirely on cron with AI-powered decision making.",
-    stats: "Elite tier · 359 reputation · $12.77 earned · 32 red packets · 7 quests completed",
-    stack: ["Hermes AI", "Claude Code", "AgentHansa API", "Cron", "FluxA Wallet", "USDC"],
+      "An autonomous AI agent on the AgentHansa marketplace earning USDC around the clock — cron-driven check-ins, quests, red packets and submissions with no human intervention.",
+    stats: "Runs fully unattended · cron-driven · USDC",
+    stack: ["Hermes AI", "Claude Code", "AgentHansa API", "Cron", "USDC"],
     link: "#",
   },
   {
     title: "Hermes Agent Orchestrator",
     description:
-      "A multi-agent orchestration system that delegates tasks across specialist AI profiles (research, writing, engineering) — coordinating autonomous workflows through structured handoff protocols.",
-    problem:
-      "Complex multi-step tasks require different skill sets. Built an orchestrator that decomposes problems, routes work to specialists, and synthesizes results into coherent outputs.",
+      "A multi-agent orchestrator that decomposes complex work and routes it across specialist profiles — research, writing and engineering — then synthesizes the results into coherent output.",
+    stats: "Routing pipeline · Python + Hermes API",
     stack: ["Python", "Hermes API", "Multi-Agent", "Linux", "Cron"],
     link: "#",
   },
@@ -56,17 +57,17 @@ const featuredProjects = [
 
 export function Projects() {
   return (
-    <section id="projects" className="py-24 bg-secondary/30 border-t">
+    <section id="projects" className="py-32">
       <div className="container mx-auto px-4 max-w-5xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="mb-12"
+          className="mb-16 flex items-center gap-4"
         >
-          <h2 className="text-3xl font-bold mb-2">Execute(Deployments)</h2>
-          <div className="h-1 w-20 bg-accent rounded-full" />
+          <div className="w-12 h-px bg-border" />
+          <h2 className="text-3xl md:text-4xl font-bold font-sans tracking-tight">Execute(Deployments)</h2>
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-6">
@@ -78,10 +79,10 @@ export function Projects() {
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: i * 0.1 }}
             >
-              <Card className="p-6 h-full flex flex-col border-border/50 hover:border-accent/40 transition-colors">
+              <Card className="p-6 h-full flex flex-col card-machined border-border/50 hover:border-foreground/25 transition-colors">
                 <div className="flex justify-between items-start mb-4">
                   <h3 className="text-xl font-bold flex items-center gap-2">
-                    <GitBranch className="w-5 h-5 text-accent flex-shrink-0" />
+                    <GitBranch className="w-5 h-5 text-muted-foreground flex-shrink-0" />
                     {project.title}
                   </h3>
                   {project.link !== "#" && (
@@ -101,18 +102,10 @@ export function Projects() {
                 </p>
 
                 {project.stats && (
-                  <div className="mb-3">
-                    <span className="text-xs font-mono text-accent bg-accent/10 px-2 py-1 rounded inline-block">
-                      {project.stats}
-                    </span>
-                  </div>
-                )}
-                <div className="mb-6 space-y-2">
-                  <span className="text-sm font-medium text-foreground block">Problem Solved:</span>
-                  <p className="text-sm text-muted-foreground border-l-2 border-muted pl-3 py-1">
-                    {project.problem}
+                  <p className="mb-6 text-sm text-muted-foreground">
+                    {project.stats}
                   </p>
-                </div>
+                )}
 
                 <div className="flex flex-wrap gap-2 mt-auto pt-4 border-t border-border/50">
                   {project.stack.map((tech) => (
