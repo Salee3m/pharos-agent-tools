@@ -1,110 +1,85 @@
 import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Code2 } from "lucide-react";
 
 export function Hero() {
   return (
-    <section className="relative min-h-[100dvh] flex items-center pt-20 overflow-hidden">
-      
-      <div className="container mx-auto px-4 relative z-10 grid lg:grid-cols-12 gap-12 items-center max-w-6xl">
-        <div className="lg:col-span-7 flex flex-col items-start pt-10">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-background border border-border/50 shadow-sm mb-10 font-mono text-xs font-semibold text-muted-foreground backdrop-blur-sm"
-          >
-            <span className="h-2 w-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.8)]"></span>
-            SYSTEM_ONLINE
-          </motion.div>
+    <section className="relative flex min-h-[calc(100dvh-4rem)] flex-col justify-center overflow-hidden py-16 sm:py-24">
+      <div className="mx-auto flex max-w-3xl flex-col items-center gap-8 px-4 text-center sm:px-6">
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+          className="flex items-center gap-2.5 rounded-full border bg-muted/60 px-3 py-1.5"
+        >
+          <span className="size-1.5 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.7)]" />
+          <Badge variant="secondary" className="rounded-full px-2 font-mono text-[10px] uppercase tracking-wider">
+            Online
+          </Badge>
+          <span className="text-xs text-muted-foreground sm:text-sm">Builder · AI · Web · Infra</span>
+        </motion.div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-fluid-display font-bold mb-6"
-          >
-            Sirleeem
-          </motion.h1>
+        <motion.h1
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.45, delay: 0.05 }}
+          className="text-fluid-display font-bold tracking-tight text-balance"
+        >
+          Sirleeem
+        </motion.h1>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="flex items-stretch gap-4 mb-8"
-          >
-            <div className="w-1 bg-foreground rounded-full" />
-            <h2 className="text-xl md:text-2xl text-muted-foreground font-mono font-medium py-1">
-              Builder <br className="hidden md:block" /> AI Engineer <br className="hidden md:block" /> Web Developer <br className="hidden md:block" /> Automation Architect
-            </h2>
-          </motion.div>
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.45, delay: 0.1 }}
+          className="max-w-xl text-base text-muted-foreground sm:text-lg"
+        >
+          I ship live products — web apps, AI agents, and cloud systems people actually use.
+        </motion.p>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="text-lg md:text-xl max-w-xl mb-12 text-muted-foreground leading-relaxed"
-          >
-            I design and build across the full stack — from web apps and AI products to autonomous agents and cloud infrastructure. I ship real, live products used by real people.
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto"
-          >
-            <Button size="lg" className="font-mono gap-2 group h-14 px-8 text-base" asChild>
-              <a href="#projects">
-                View Projects
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </a>
-            </Button>
-            <Button size="lg" variant="outline" className="font-mono gap-2 h-14 px-8 text-base" asChild>
-              <a href="#what-i-build">
-                <Code2 className="w-4 h-4" />
-                Explore Systems
-              </a>
-            </Button>
-          </motion.div>
-        </div>
-
-        <div className="lg:col-span-5 hidden lg:block">
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.7, delay: 0.5 }}
-            className="relative w-full aspect-square card-machined border border-border/50 bg-card module-card overflow-hidden flex flex-col"
-          >
-            <div className="h-8 border-b border-border/50 bg-muted/30 flex items-center px-4 gap-2">
-              <div className="w-2 h-2 rounded-full bg-red-500/50" />
-              <div className="w-2 h-2 rounded-full bg-yellow-500/50" />
-              <div className="w-2 h-2 rounded-full bg-green-500/50" />
-              <div className="ml-2 font-mono text-[10px] text-muted-foreground">sys.log</div>
-            </div>
-            <div className="flex-1 p-6 font-mono text-xs text-muted-foreground flex flex-col gap-2 overflow-hidden relative">
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 }} className="flex gap-2">
-                <span className="text-foreground">{">"}</span> <span>Initializing kernel...</span>
-              </motion.div>
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.0 }} className="flex gap-2">
-                <span className="text-foreground">{" >"}</span> <span>Loading modules [AI, Web, Cloud, Agents]...</span>
-              </motion.div>
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2 }} className="flex gap-2">
-                <span className="text-foreground">{" >"}</span> <span>Establishing connection to Hermes... OK</span>
-              </motion.div>
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.4 }} className="flex gap-2">
-                <span className="text-foreground">{" >"}</span> <span>Deploying production systems... OK</span>
-              </motion.div>
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.6 }} className="flex gap-2">
-                <span className="text-foreground">{">"}</span> <span>System ready. Awaiting instructions.</span>
-              </motion.div>
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.6 }} className="flex gap-2 mt-auto">
-                <span className="text-foreground">{">"}</span> <span className="w-2 h-4 bg-foreground animate-pulse" />
-              </motion.div>
-            </div>
-          </motion.div>
-        </div>
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.45, delay: 0.15 }}
+          className="flex flex-col gap-3 sm:flex-row"
+        >
+          <Button size="lg" className="h-12 gap-2 px-7 font-mono" asChild>
+            <a href="#work">
+              View work
+              <ArrowRight className="size-4" />
+            </a>
+          </Button>
+          <Button size="lg" variant="outline" className="h-12 px-7 font-mono" asChild>
+            <a href="#contact">Contact</a>
+          </Button>
+        </motion.div>
       </div>
+
+      {/* Compact stats strip — free about-us-01 pattern, no video */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.25 }}
+        className="mx-auto mt-16 w-full max-w-4xl px-4 sm:mt-20 sm:px-6"
+      >
+        <div className="grid grid-cols-2 gap-px overflow-hidden rounded-xl border bg-border sm:grid-cols-4">
+          {[
+            { value: "6+", label: "Live products" },
+            { value: "AI", label: "Agents & ops" },
+            { value: "Web", label: "React · PWAs" },
+            { value: "Cloud", label: "Workers · CDN" },
+          ].map((stat) => (
+            <div
+              key={stat.label}
+              className="flex flex-col items-center gap-1 bg-card px-4 py-6 text-center"
+            >
+              <span className="text-2xl font-semibold tracking-tight">{stat.value}</span>
+              <span className="text-sm text-muted-foreground">{stat.label}</span>
+            </div>
+          ))}
+        </div>
+      </motion.div>
     </section>
   );
 }

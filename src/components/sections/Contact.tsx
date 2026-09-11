@@ -1,57 +1,55 @@
 import { motion } from "framer-motion";
+import { Github, Linkedin, Mail } from "lucide-react";
+import { FaXTwitter } from "react-icons/fa6";
 import { Button } from "@/components/ui/button";
-import { Mail, Terminal } from "lucide-react";
-import { FaGithub, FaTwitter } from "react-icons/fa";
+import { Card, CardContent } from "@/components/ui/card";
+
+const socials = [
+  { label: "GitHub", href: "https://github.com/Sirleeem", icon: Github },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/isah-muhammad-16140b382", icon: Linkedin },
+  { label: "X", href: "https://twitter.com/SaleemLabs", icon: FaXTwitter },
+] as const;
 
 export function Contact() {
   return (
-    <section id="contact" className="py-32 relative overflow-hidden">
-      <div className="container mx-auto px-4 max-w-4xl text-center relative z-10">
+    <section id="contact" className="py-16 sm:py-24 lg:py-28">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="relative bg-card card-machined border p-12 md:p-20 shadow-sm overflow-hidden module-card"
+          transition={{ duration: 0.4 }}
         >
-          
-          <div className="w-16 h-16 rounded-xl bg-background border flex items-center justify-center mx-auto mb-8 relative z-10 shadow-sm">
-            <Terminal className="w-8 h-8 text-foreground" />
-          </div>
+          <Card className="border-none bg-muted shadow-sm card-machined">
+            <CardContent className="flex flex-col items-start justify-between gap-8 px-6 py-10 sm:flex-row sm:items-center sm:px-10 sm:py-14 lg:px-14">
+              <div className="max-w-lg space-y-3">
+                <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
+                  Let&apos;s build something
+                </h2>
+                <p className="text-muted-foreground">
+                  Open for products, agents, and infrastructure work.
+                </p>
+              </div>
 
-          <h2 className="text-3xl md:text-5xl font-bold mb-6 tracking-tight relative z-10 font-sans">Establish.Connection()</h2>
-          
-          <p className="text-muted-foreground mb-10 max-w-xl mx-auto text-lg leading-relaxed relative z-10">
-            Whether you need a complex automation pipeline built, a custom AI agent deployed, or infrastructure secured—my terminal is open.
-          </p>
-
-          <p className="font-mono text-sm font-semibold text-foreground mb-10 relative z-10">
-            {">"} ready for new deployments.
-          </p>
-
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 relative z-10">
-            <Button size="lg" className="font-mono gap-3 h-14 px-8 w-full sm:w-auto shadow-lg bg-foreground text-background hover:bg-foreground/90" asChild>
-              <a href="mailto:Sirleeem101@gmail.com">
-                <Mail className="w-5 h-5" />
-                Sirleeem101@gmail.com
-              </a>
-            </Button>
-            
-            <div className="flex items-center gap-4">
-              <Button variant="outline" size="icon" className="w-14 h-14 rounded-xl bg-background border-border hover:bg-secondary transition-colors" asChild>
-                <a href="https://github.com/Sirleeem" target="_blank" rel="noreferrer">
-                  <FaGithub className="w-6 h-6 text-foreground" />
-                  <span className="sr-only">GitHub</span>
-                </a>
-              </Button>
-              <Button variant="outline" size="icon" className="w-14 h-14 rounded-xl bg-background border-border hover:bg-secondary transition-colors" asChild>
-                <a href="https://twitter.com/SaleemLabs" target="_blank" rel="noreferrer">
-                  <FaTwitter className="w-6 h-6 text-foreground" />
-                  <span className="sr-only">X</span>
-                </a>
-              </Button>
-            </div>
-          </div>
+              <div className="flex w-full flex-col gap-3 sm:w-auto sm:items-end">
+                <Button size="lg" className="h-12 w-full gap-2 px-6 font-mono sm:w-auto" asChild>
+                  <a href="mailto:Sirleeem101@gmail.com">
+                    <Mail className="size-4" />
+                    Sirleeem101@gmail.com
+                  </a>
+                </Button>
+                <div className="flex items-center gap-2">
+                  {socials.map(({ label, href, icon: Icon }) => (
+                    <Button key={label} variant="outline" size="icon" className="rounded-md" asChild>
+                      <a href={href} target="_blank" rel="noreferrer" aria-label={label}>
+                        <Icon className="size-4" />
+                      </a>
+                    </Button>
+                  ))}
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </motion.div>
       </div>
     </section>
