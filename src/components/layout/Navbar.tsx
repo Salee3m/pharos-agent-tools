@@ -11,7 +11,7 @@ import {
 const links = [
   { title: "Work", href: "#work" },
   { title: "Build", href: "#build" },
-  { title: "Contact", href: "#contact" },
+  { title: "Contact", href: "#footer" },
 ] as const;
 
 export function Navbar() {

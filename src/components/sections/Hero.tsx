@@ -51,7 +51,7 @@ export function Hero() {
             </a>
           </Button>
           <Button size="lg" variant="outline" className="h-12 px-7 font-mono" asChild>
-            <a href="#contact">Contact</a>
+            <a href="#footer">Contact</a>
           </Button>
         </motion.div>
       </div>
