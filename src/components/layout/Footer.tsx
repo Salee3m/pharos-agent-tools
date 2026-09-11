@@ -1,4 +1,4 @@
-import { Github, Mail, TerminalSquare } from "lucide-react";
+import { Github, Linkedin, Mail, TerminalSquare } from "lucide-react";
 import { FaXTwitter } from "react-icons/fa6";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -13,6 +13,11 @@ const socials = [
     label: "Email",
     href: "mailto:Sirleeem101@gmail.com",
     icon: Mail,
+  },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/isah-muhammad-16140b382",
+    icon: Linkedin,
   },
   {
     label: "X",
