@@ -3,6 +3,22 @@
 @import "tw-animate-css";
 @plugin "@tailwindcss/typography";
 
+/* Signature script fonts (footer-11) — personal-use demo fonts, self-hosted */
+@font-face {
+  font-family: "Priestacy";
+  src: url("/fonts/Priestacy.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Amsterdam Handwriting";
+  src: url("/fonts/AmsterdamHandwriting.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -226,3 +242,9 @@
     scroll-behavior: auto !important;
   }
 }
+
+.footer-signature {
+  font-family: "Priestacy", "Amsterdam Handwriting", "Segoe Script", "Bradley Hand", cursive;
+  font-weight: 400;
+}
+

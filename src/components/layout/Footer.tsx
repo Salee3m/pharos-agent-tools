@@ -4,8 +4,7 @@ import { Separator } from "@/components/ui/separator";
 /**
  * Exact free block: shadcnstudio Footer 11
  * https://shadcnstudio.com/preview/blocks/base/marketing-ui/footer-component/footer-component-11
- * Markup/classes/assets match the free block RSC tree.
- * Links + signature text personalized for Sirleeem.
+ * Signature uses Priestacy (Amsterdam Handwriting fallback).
  */
 const socials = [
   {
@@ -86,13 +85,12 @@ export function Footer() {
         </div>
 
         <div className="space-y-1 text-center">
-          <img
-            src="/footer11/signature.png"
-            alt=""
+          <p
+            className="footer-signature mx-auto -mb-6 w-60 select-none text-[3.35rem] leading-none tracking-tight text-foreground/80 sm:text-[3.75rem]"
             aria-hidden="true"
-            loading="lazy"
-            className="mx-auto -mb-6 w-60"
-          />
+          >
+            Sirleeem
+          </p>
           <p className="text-xs">
             @sirleeem {year}
           </p>
