@@ -1,38 +1,50 @@
-import { Github, Linkedin, Mail } from "lucide-react";
-import { FaXTwitter } from "react-icons/fa6";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
 /**
- * Free shadcnstudio Footer 11 (marketing-ui/footer-component-11)
- * Socials on horizontal rules → thank-you lines → script signature → @handle year
+ * Exact free block: shadcnstudio Footer 11
+ * https://shadcnstudio.com/preview/blocks/base/marketing-ui/footer-component/footer-component-11
+ * Markup/classes/assets match the free block RSC tree.
+ * Links + signature text personalized for Sirleeem.
  */
 const socials = [
-  { label: "GitHub", href: "https://github.com/Sirleeem", icon: Github },
-  { label: "Email", href: "mailto:Sirleeem101@gmail.com", icon: Mail },
+  {
+    label: "GitHub",
+    href: "https://github.com/Sirleeem",
+    src: "/footer11/github-logo.png",
+  },
+  {
+    label: "Email",
+    href: "mailto:Sirleeem101@gmail.com",
+    src: "/footer11/gmail.png",
+  },
   {
     label: "LinkedIn",
     href: "https://www.linkedin.com/in/isah-muhammad-16140b382",
-    icon: Linkedin,
+    src: "/footer11/linkedin.png",
   },
-  { label: "X", href: "https://twitter.com/SaleemLabs", icon: FaXTwitter },
+  {
+    label: "X",
+    href: "https://twitter.com/SaleemLabs",
+    src: "/footer11/twitter.png",
+  },
 ] as const;
 
 export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer id="footer" className="bg-background py-12 sm:py-16 lg:py-24">
-      <div className="mx-auto max-w-7xl space-y-12 px-4 sm:space-y-16 sm:px-6 lg:px-8">
+    <footer id="footer" className="py-8 sm:py-16 lg:py-24">
+      <div className="mx-auto max-w-7xl space-y-12 px-4 sm:px-6 lg:px-8">
         <div className="flex items-center gap-3">
           <Separator className="flex-1" />
           <div className="flex items-center gap-3">
-            {socials.map(({ label, href, icon: Icon }) => (
+            {socials.map(({ label, href, src }) => (
               <Button
                 key={label}
                 variant="outline"
                 size="icon"
-                className="size-10 shrink-0 rounded-md"
+                className="rounded-md"
                 asChild
               >
                 <a
@@ -41,7 +53,13 @@ export function Footer() {
                   rel={href.startsWith("mailto:") ? undefined : "noreferrer"}
                   aria-label={label}
                 >
-                  <Icon className="size-4" />
+                  <img
+                    src={src}
+                    alt=""
+                    aria-hidden="true"
+                    loading="lazy"
+                    className="size-4 dark:invert-0"
+                  />
                 </a>
               </Button>
             ))}
@@ -49,23 +67,29 @@ export function Footer() {
           <Separator className="flex-1" />
         </div>
 
-        <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-3 text-center">
+        <div className="flex flex-wrap items-center justify-center gap-5 text-center sm:ml-8">
           <p className="text-muted-foreground">Thank you, for visiting here</p>
-          <p className="text-muted-foreground">Let&apos;s create something beautiful</p>
+          <img
+            src="/footer11/seal.png"
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+            className="max-sm:hidden sm:size-[6.25rem]"
+          />
+          <p className="text-muted-foreground">
+            Let&apos;s create something beautiful
+          </p>
         </div>
 
-        <div className="space-y-3 pt-6 text-center sm:pt-10">
-          <p
-            className="select-none text-[2.75rem] leading-none tracking-tight text-foreground/80 sm:text-6xl"
-            style={{
-              fontFamily: '"Caveat", "Segoe Script", "Bradley Hand", cursive',
-              fontWeight: 600,
-            }}
+        <div className="space-y-1 text-center">
+          <img
+            src="/footer11/signature.png"
+            alt=""
             aria-hidden="true"
-          >
-            Sirleeem
-          </p>
-          <p className="text-xs text-muted-foreground">
+            loading="lazy"
+            className="mx-auto -mb-6 w-60"
+          />
+          <p className="text-xs">
             @sirleeem {year}
           </p>
         </div>
