@@ -1,10 +1,13 @@
 import { motion } from "framer-motion";
-import { Activity, Cloud, Cpu, Globe } from "lucide-react";
+import { Activity } from "@/components/icons/rune/Activity";
+import { Cloud } from "@/components/icons/rune/Cloud";
+import { Globe } from "@/components/icons/rune/Globe";
+import { Sparkles } from "@/components/icons/rune/Sparkles";
 import { Card, CardContent } from "@/components/ui/card";
 
 const features = [
   {
-    icon: Cpu,
+    icon: Sparkles,
     title: "AI agents",
     description: "Autonomous agents that plan, run, and ship work without babysitting.",
   },
@@ -56,7 +59,7 @@ export function Features() {
               <Card className="h-full border bg-card shadow-none card-machined">
                 <CardContent className="flex h-full flex-col gap-4 p-6">
                   <div className="flex size-10 items-center justify-center rounded-md border bg-secondary">
-                    <feature.icon className="size-5" />
+                    <feature.icon className="size-5" strokeWidth={2} />
                   </div>
                   <div className="space-y-2">
                     <h3 className="text-lg font-semibold">{feature.title}</h3>
