@@ -248,3 +248,12 @@
   font-weight: 400;
 }
 
+/* Hero 44 marquee */
+@keyframes marquee-horizontal {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(-100% - var(--marquee-gap, 2rem))); }
+}
+.animate-marquee-horizontal {
+  animation: marquee-horizontal var(--marquee-duration, 25s) linear infinite;
+}
+

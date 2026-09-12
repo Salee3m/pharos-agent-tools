@@ -1,150 +1,110 @@
-import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
-import { ArrowRight, Terminal } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Marquee } from "@/components/ui/marquee";
+import { GreetingWord } from "@/components/sections/GreetingWord";
+import { HeroIdCard } from "@/components/sections/HeroIdCard";
 import { openTerminal } from "@/components/fun/FunLayer";
 
-function useCountUp(target: number, active: boolean, duration = 900) {
-  const [value, setValue] = useState(0);
-  useEffect(() => {
-    if (!active) return;
-    let raf = 0;
-    const start = performance.now();
-    const tick = (now: number) => {
-      const t = Math.min(1, (now - start) / duration);
-      const eased = 1 - Math.pow(1 - t, 3);
-      setValue(Math.round(target * eased));
-      if (t < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [target, active, duration]);
-  return value;
-}
-
-function StatCell({
-  value,
-  label,
-  numeric,
-  active,
-}: {
-  value: string;
-  label: string;
-  numeric?: number;
-  active: boolean;
-}) {
-  const n = useCountUp(numeric ?? 0, active && numeric != null);
-  return (
-    <div className="flex flex-col items-center gap-1 bg-card px-4 py-6 text-center transition-colors hover:bg-muted/40">
-      <span className="text-2xl font-semibold tracking-tight tabular-nums">
-        {numeric != null ? `${n}+` : value}
-      </span>
-      <span className="text-sm text-muted-foreground">{label}</span>
-    </div>
-  );
-}
+/**
+ * Free shadcnstudio Hero 44 layout
+ * https://shadcnstudio.com/preview/blocks/base/marketing-ui/hero-section/hero-section-44
+ * Greeting rotator + copy + CTAs + ID card + logo marquee.
+ */
+const MARQUEE = [
+  "React",
+  "TypeScript",
+  "Tailwind",
+  "shadcn/ui",
+  "Cloudflare",
+  "Workers",
+  "FastAPI",
+  "Python",
+  "Hermes",
+  "PWA",
+  "Vite",
+  "Linux",
+] as const;
 
 export function Hero() {
-  const statsRef = useRef<HTMLDivElement>(null);
-  const [statsInView, setStatsInView] = useState(false);
-
-  useEffect(() => {
-    const el = statsRef.current;
-    if (!el) return;
-    const io = new IntersectionObserver(
-      ([e]) => {
-        if (e.isIntersecting) {
-          setStatsInView(true);
-          io.disconnect();
-        }
-      },
-      { threshold: 0.3 }
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
-
   return (
-    <section className="relative flex min-h-[calc(100dvh-4rem)] flex-col justify-center overflow-hidden py-16 sm:py-24">
-      <div className="mx-auto flex max-w-3xl flex-col items-center gap-8 px-4 text-center sm:px-6">
-        <motion.button
-          type="button"
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-          onClick={() => openTerminal()}
-          className="group flex items-center gap-2.5 rounded-full border bg-muted/60 px-3 py-1.5 transition-colors hover:border-foreground/30 hover:bg-muted"
-          title="Open terminal (`)"
-        >
-          <span className="size-1.5 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.7)] group-hover:animate-pulse" />
-          <Badge
-            variant="secondary"
-            className="rounded-full px-2 font-mono text-[10px] uppercase tracking-wider"
-          >
-            Online
-          </Badge>
-          <span className="text-xs text-muted-foreground sm:text-sm">
-            Builder · AI · Web · Infra
-          </span>
-          <Terminal className="size-3.5 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100" />
-        </motion.button>
+    <section className="lg:relative">
+      <div className="max-sm:pt-20 sm:py-16 lg:pt-32 lg:pb-24">
+        <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <div className="space-y-6 lg:max-w-lg">
+            <button
+              type="button"
+              onClick={() => openTerminal()}
+              className="bg-card inline-flex h-6.5 w-fit items-center justify-center gap-1 overflow-visible rounded-full border px-2.5 text-sm whitespace-nowrap text-green-600 dark:text-green-400"
+              title="Open terminal"
+            >
+              <span className="relative inline-flex size-1.5">
+                <span className="absolute -inset-0.5 animate-[ping_1.8s_cubic-bezier(0,0,0.2,1)_infinite] rounded-full bg-green-600/40 opacity-75 dark:bg-green-400/40" />
+                <span className="relative inline-flex size-1.5 rounded-full bg-green-600 dark:bg-green-400" />
+              </span>
+              Available
+            </button>
 
-        <motion.h1
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45, delay: 0.05 }}
-          className="text-fluid-display font-bold tracking-tight text-balance"
-        >
-          Sirleeem
-        </motion.h1>
+            <h1 className="mb-2 text-4xl font-semibold tracking-tight sm:text-5xl lg:text-[64px] lg:font-bold">
+              <GreetingWord />
+              I am Sirleeem 👋🏻
+            </h1>
 
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45, delay: 0.1 }}
-          className="max-w-xl text-base text-muted-foreground sm:text-lg"
-        >
-          I ship live products — web apps, AI agents, and cloud systems people actually use.
-        </motion.p>
+            <p className="text-muted-foreground text-xl font-medium sm:text-2xl lg:text-3xl">
+              Builder · AI Engineer
+            </p>
 
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45, delay: 0.15 }}
-          className="flex flex-col gap-3 sm:flex-row"
-        >
-          <Button size="lg" className="h-12 gap-2 px-7 font-mono" asChild>
-            <a href="#work">
-              View work
-              <ArrowRight className="size-4" />
-            </a>
-          </Button>
-          <Button size="lg" variant="outline" className="h-12 gap-2 px-7 font-mono" onClick={() => openTerminal()}>
-            <Terminal className="size-4" />
-            Terminal
-          </Button>
-        </motion.div>
+            <p className="text-muted-foreground mb-8 max-w-2xl text-base">
+              I ship live products — web apps, AI agents, and cloud systems.
+              From first sketch to production deploy.
+            </p>
 
-        <p className="font-mono text-[10px] text-muted-foreground/70">
-          press <kbd className="rounded border px-1 py-0.5">`</kbd> for shell · konami works too
-        </p>
-      </div>
+            <div className="flex flex-wrap items-center gap-2.5 pt-2">
+              <Button
+                variant="outline"
+                className="h-11 rounded-full px-4 text-base"
+                asChild
+              >
+                <a href="#work">View work</a>
+              </Button>
 
-      <motion.div
-        ref={statsRef}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.25 }}
-        className="mx-auto mt-16 w-full max-w-4xl px-4 sm:mt-20 sm:px-6"
-      >
-        <div className="grid grid-cols-2 gap-px overflow-hidden rounded-xl border bg-border sm:grid-cols-4">
-          <StatCell value="6+" label="Live products" numeric={6} active={statsInView} />
-          <StatCell value="AI" label="Agents & ops" active={statsInView} />
-          <StatCell value="Web" label="React · PWAs" active={statsInView} />
-          <StatCell value="Cloud" label="Workers · CDN" active={statsInView} />
+              <Button
+                variant="outline"
+                className="group bg-card hover:bg-card h-11 gap-2.5 rounded-full pr-4 pl-4 text-base shadow-sm transition-[padding] duration-300 hover:pl-2"
+                asChild
+              >
+                <a href="#footer">
+                  <span className="bg-primary relative flex size-2.5 items-center justify-center overflow-hidden rounded-full transition-all duration-300 group-hover:size-6.5">
+                    <ArrowRight className="text-primary-foreground absolute size-4 -translate-x-3 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
+                  </span>
+                  Let&apos;s connect
+                </a>
+              </Button>
+            </div>
+          </div>
+
+          <HeroIdCard />
         </div>
-      </motion.div>
+
+        {/* Logo / stack marquee */}
+        <div className="relative mx-auto mt-10 mb-10 w-full max-w-5xl px-4 sm:px-6 lg:px-8">
+          <div className="from-background pointer-events-none absolute inset-y-0 left-0 z-[1] w-16 bg-gradient-to-r to-transparent sm:w-35" />
+          <div className="from-background pointer-events-none absolute inset-y-0 right-0 z-[1] w-16 bg-gradient-to-l to-transparent sm:w-35" />
+          <div className="mx-auto w-full max-w-5xl overflow-hidden">
+            <Marquee>
+              {MARQUEE.map((item) => (
+                <div
+                  key={item}
+                  className="bg-muted flex size-16 shrink-0 items-center justify-center rounded-md"
+                >
+                  <span className="px-1 text-center font-mono text-[10px] font-medium tracking-tight text-muted-foreground">
+                    {item}
+                  </span>
+                </div>
+              ))}
+            </Marquee>
+          </div>
+        </div>
+      </div>
     </section>
   );
 }
