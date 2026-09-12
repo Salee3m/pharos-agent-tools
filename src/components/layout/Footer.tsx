@@ -83,11 +83,8 @@ export function Footer() {
           </p>
         </div>
 
-        <div className="space-y-1 text-center">
-          <p
-            className="footer-signature mx-auto -mb-6 w-60 select-none text-[3.35rem] leading-none tracking-tight text-foreground/80 sm:text-[3.75rem]"
-            aria-hidden="true"
-          >
+        <div className="text-center">
+          <p className="footer-signature mx-auto w-60 select-none text-[3.35rem] leading-none tracking-tight text-foreground/80 sm:text-[3.75rem]">
             Sirleeem
           </p>
         </div>
