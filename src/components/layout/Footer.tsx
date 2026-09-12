@@ -58,7 +58,11 @@ export function Footer() {
                     alt=""
                     aria-hidden="true"
                     loading="lazy"
-                    className="size-4 dark:invert-0"
+                    className={
+                      label === "GitHub" || label === "X"
+                        ? "size-4 dark:invert"
+                        : "size-4"
+                    }
                   />
                 </a>
               </Button>
