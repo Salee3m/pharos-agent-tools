@@ -1,4 +1,17 @@
-import { ArrowRight } from "lucide-react";
+import type { ComponentType } from "react";
+import { ArrowRight, Boxes, Cloud, TerminalSquare, Workflow } from "lucide-react";
+import {
+  SiCloudflare,
+  SiFastapi,
+  SiGithub,
+  SiLinux,
+  SiNodedotjs,
+  SiPython,
+  SiReact,
+  SiTailwindcss,
+  SiTypescript,
+  SiVite,
+} from "react-icons/si";
 import { Button } from "@/components/ui/button";
 import { Marquee } from "@/components/ui/marquee";
 import { GreetingWord } from "@/components/sections/GreetingWord";
@@ -8,29 +21,31 @@ import { openTerminal } from "@/components/fun/FunLayer";
 /**
  * Free shadcnstudio Hero 44 layout
  * https://shadcnstudio.com/preview/blocks/base/marketing-ui/hero-section/hero-section-44
- * Greeting rotator + copy + CTAs + ID card + logo marquee.
  */
-const MARQUEE = [
-  "React",
-  "TypeScript",
-  "Tailwind",
-  "shadcn/ui",
-  "Cloudflare",
-  "Workers",
-  "FastAPI",
-  "Python",
-  "Hermes",
-  "PWA",
-  "Vite",
-  "Linux",
-] as const;
+const MARQUEE: { label: string; Icon: ComponentType<{ className?: string }> }[] = [
+  { label: "React", Icon: SiReact },
+  { label: "TypeScript", Icon: SiTypescript },
+  { label: "Tailwind", Icon: SiTailwindcss },
+  { label: "Vite", Icon: SiVite },
+  { label: "Cloudflare", Icon: SiCloudflare },
+  { label: "Workers", Icon: Cloud },
+  { label: "Python", Icon: SiPython },
+  { label: "FastAPI", Icon: SiFastapi },
+  { label: "Node", Icon: SiNodedotjs },
+  { label: "Linux", Icon: SiLinux },
+  { label: "GitHub", Icon: SiGithub },
+  { label: "shadcn", Icon: Boxes },
+  { label: "Hermes", Icon: Workflow },
+  { label: "Terminal", Icon: TerminalSquare },
+];
 
 export function Hero() {
   return (
     <section className="lg:relative">
       <div className="max-sm:pt-20 sm:py-16 lg:pt-32 lg:pb-24">
         <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <div className="space-y-6 lg:max-w-lg">
+          {/* Copy stays above the card */}
+          <div className="relative z-20 space-y-6 lg:max-w-lg lg:pr-4">
             <button
               type="button"
               onClick={() => openTerminal()}
@@ -85,20 +100,19 @@ export function Hero() {
           <HeroIdCard />
         </div>
 
-        {/* Logo / stack marquee */}
-        <div className="relative mx-auto mt-10 mb-10 w-full max-w-5xl px-4 sm:px-6 lg:px-8">
+        <div className="relative z-10 mx-auto mt-10 mb-10 w-full max-w-5xl px-4 sm:px-6 lg:px-8">
           <div className="from-background pointer-events-none absolute inset-y-0 left-0 z-[1] w-16 bg-gradient-to-r to-transparent sm:w-35" />
           <div className="from-background pointer-events-none absolute inset-y-0 right-0 z-[1] w-16 bg-gradient-to-l to-transparent sm:w-35" />
           <div className="mx-auto w-full max-w-5xl overflow-hidden">
             <Marquee>
-              {MARQUEE.map((item) => (
+              {MARQUEE.map(({ label, Icon }) => (
                 <div
-                  key={item}
+                  key={label}
+                  title={label}
                   className="bg-muted flex size-16 shrink-0 items-center justify-center rounded-md"
                 >
-                  <span className="px-1 text-center font-mono text-[10px] font-medium tracking-tight text-muted-foreground">
-                    {item}
-                  </span>
+                  <Icon className="size-7 text-foreground/80" aria-hidden />
+                  <span className="sr-only">{label}</span>
                 </div>
               ))}
             </Marquee>

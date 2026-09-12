@@ -1,6 +1,14 @@
 import { useEffect, useState } from "react";
 
-const WORDS = ["Hello", "नमस्ते", "你好", "Ciao"] as const;
+const WORDS = [
+  "Hello",
+  "नमस्ते",
+  "你好",
+  "Ciao",
+  "Sannu",
+  "Báwo ni",
+  "Ndewo",
+] as const;
 
 /** Hero 44 rotating greeting word (free shadcnstudio hero-section-44). */
 export function GreetingWord() {
@@ -13,7 +21,6 @@ export function GreetingWord() {
     return () => window.clearInterval(id);
   }, []);
 
-  // Widest word reserves layout space (invisible measure stack)
   return (
     <span className="mr-2 inline-grid overflow-hidden align-bottom">
       {WORDS.map((w) => (

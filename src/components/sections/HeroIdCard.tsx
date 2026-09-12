@@ -2,12 +2,11 @@
 export function HeroIdCard({ className = "" }: { className?: string }) {
   return (
     <div
-      className={`pointer-events-none mx-auto mt-8 aspect-[4/5] w-full max-w-80 drop-shadow-xl max-lg:hidden lg:absolute lg:-top-20 lg:right-0 lg:left-0 lg:z-10 lg:mt-0 lg:aspect-auto lg:h-[28rem] lg:max-w-none ${className}`}
+      className={`pointer-events-none relative mx-auto mt-10 w-full max-w-[17rem] drop-shadow-xl max-lg:hidden lg:absolute lg:top-8 lg:right-0 lg:left-auto lg:z-0 lg:mt-0 lg:w-[min(100%,18rem)] ${className}`}
       aria-hidden
     >
-      <div className="mx-auto flex h-full max-w-xs flex-col items-center justify-start pt-2 lg:pt-8">
-        {/* lanyard strap */}
-        <div className="h-16 w-1.5 rounded-full bg-gradient-to-b from-muted-foreground/40 to-muted-foreground/10" />
+      <div className="mx-auto flex flex-col items-center justify-start">
+        <div className="h-14 w-1.5 rounded-full bg-gradient-to-b from-muted-foreground/40 to-muted-foreground/10" />
         <div className="mb-2 size-3 rounded-full border-2 border-muted-foreground/50 bg-card" />
 
         <div className="card-machined w-full overflow-hidden border bg-card shadow-lg">
