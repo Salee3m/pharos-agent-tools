@@ -30,7 +30,6 @@ const socials = [
 ] as const;
 
 export function Footer() {
-  const year = new Date().getFullYear();
 
   return (
     <footer id="footer" className="py-8 sm:py-16 lg:py-24">
@@ -90,9 +89,6 @@ export function Footer() {
             aria-hidden="true"
           >
             Sirleeem
-          </p>
-          <p className="text-xs">
-            @sirleeem {year}
           </p>
         </div>
       </div>
