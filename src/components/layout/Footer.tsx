@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
@@ -30,6 +31,7 @@ const socials = [
 ] as const;
 
 export function Footer() {
+  const [sealSpin, setSealSpin] = useState(0);
 
   return (
     <footer id="footer" className="py-8 sm:py-16 lg:py-24">
@@ -71,13 +73,22 @@ export function Footer() {
 
         <div className="flex flex-wrap items-center justify-center gap-5 text-center sm:ml-8">
           <p className="text-muted-foreground">Thank you, for visiting here</p>
-          <img
-            src="/footer11/seal.png"
-            alt=""
-            aria-hidden="true"
-            loading="lazy"
-            className="max-sm:hidden sm:size-[6.25rem]"
-          />
+          <button
+            type="button"
+            className="max-sm:hidden"
+            onClick={() => setSealSpin((n) => n + 1)}
+            title="spin the seal"
+            aria-label="Spin seal"
+          >
+            <img
+              src="/footer11/seal.png"
+              alt=""
+              aria-hidden="true"
+              loading="lazy"
+              className="size-[6.25rem] transition-transform duration-700 ease-out"
+              style={{ transform: `rotate(${sealSpin * 360}deg)` }}
+            />
+          </button>
           <p className="text-muted-foreground">
             Let&apos;s create something beautiful
           </p>

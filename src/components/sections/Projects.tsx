@@ -73,20 +73,24 @@ export function Projects() {
               viewport={{ once: true }}
               transition={{ duration: 0.35, delay: i * 0.04 }}
             >
-              <Card className="flex h-full flex-col border border-border/60 bg-card p-5 shadow-none card-machined transition-colors hover:border-foreground/20">
+              <Card className="group flex h-full flex-col border border-border/60 bg-card p-5 shadow-none card-machined transition-all duration-300 hover:-translate-y-1 hover:border-foreground/25 hover:shadow-md">
                 <div className="mb-3 flex items-start justify-between gap-3">
                   <h3 className="text-lg font-semibold leading-snug">{project.title}</h3>
-                  {project.link !== "#" && (
+                  {project.link !== "#" ? (
                     <a
                       href={project.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-muted-foreground transition-colors hover:text-foreground"
+                      className="flex items-center gap-1.5 text-muted-foreground transition-colors hover:text-foreground"
                       aria-label={`Open ${project.title}`}
                     >
+                      <span className="relative flex size-1.5">
+                        <span className="absolute inline-flex size-full animate-ping rounded-full bg-green-500/60" />
+                        <span className="relative inline-flex size-1.5 rounded-full bg-green-500" />
+                      </span>
                       <ExternalLink className="size-4" />
                     </a>
-                  )}
+                  ) : null}
                 </div>
 
                 <p className="mb-5 flex-1 text-sm leading-relaxed text-muted-foreground">

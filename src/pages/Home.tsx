@@ -3,6 +3,7 @@ import { Hero } from "@/components/sections/Hero";
 import { Features } from "@/components/sections/Features";
 import { Projects } from "@/components/sections/Projects";
 import { Footer } from "@/components/layout/Footer";
+import { FunLayer } from "@/components/fun/FunLayer";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
         <Projects />
       </main>
       <Footer />
+      <FunLayer />
     </div>
   );
 }
